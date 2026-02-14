@@ -1,22 +1,23 @@
 <!doctype html>
-<html lang="kr">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hello World</title>
+  <title>Lottery Number Generator</title>
   <link href='/style.css' rel='stylesheet'>
 </head>
 <body>
-  <div class="game-container">
-    <h1>Bible Fill-in-the-Blanks</h1>
-    <div id="verse-display" class="verse-display"></div>
-
-    <div class="controls">
-      <button id="check-button">Check Answer</button>
-      <button id="next-button">Next Verse</button>
+  <div class="lottery-container">
+    <h1>Lottery Number Generator</h1>
+    <div id="number-display" class="number-display">
+      <div class="number-ball">?</div>
+      <div class="number-ball">?</div>
+      <div class="number-ball">?</div>
+      <div class="number-ball">?</div>
+      <div class="number-ball">?</div>
+      <div class="number-ball">?</div>
     </div>
-    <div id="feedback" class="feedback"></div>
-    <div id="score" class="score">Score: 0</div>
+    <button id="generate-button">Generate Numbers</button>
   </div>
   <script defer type="text/javascript" src="/main.js"></script>
 </body>

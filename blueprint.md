@@ -1,78 +1,51 @@
-# Project Blueprint: Bible Fill-in-the-Blanks Game
+# Project Blueprint: Lottery Number Generator
 
 ## Overview
-This project is being transformed from a basic "Hello World" web page into an interactive Bible fill-in-the-blanks game. The game will present users with a Bible verse where certain words are hidden, and the user must type the correct words to complete the verse.
+This project is being transformed from a Bible fill-in-the-blanks game into a Lottery Number Generator. The application will allow users to generate a set of unique random numbers, typically used for lottery games.
 
 ## Detailed Outline
 
 ### Initial State (Before this task)
-*   `index.html`: Basic HTML5 structure with a "Hello, world!" heading, a simple button, and links to `style.css` and `main.js`.
-*   `style.css`: Empty CSS file.
-*   `main.js`: Empty JavaScript file.
+*   The project was a Bible fill-in-the-blanks game with `index.html`, `style.css`, and `main.js` structured for that purpose.
 *   Git repository initialized and pushed to `https://github.com/jiho755/zihoapp-1`.
 
-### Current Task: Implement Bible Fill-in-the-Blanks Game
+### Current Task: Implement Lottery Number Generator
 
 #### **1. HTML Structure (`index.html`)**
-    *   **Purpose:** Define the layout and interactive elements of the game.
+    *   **Purpose:** Define the layout and interactive elements of the number generator.
     *   **Components:**
-        *   Main game container.
-        *   Header/Title for the game.
-        *   Display area for the Bible verse with blanks.
-        *   Input field for user to type their answer.
-        *   "Check Answer" button.
-        *   Feedback area (e.g., "Correct!", "Incorrect, try again.").
-        *   "Next Verse" button.
-        *   Score display.
+        *   Main application container.
+        *   Header/Title for the application (e.g., "Lottery Number Generator").
+        *   Display area for the generated numbers.
+        *   A "Generate Numbers" button.
+        *   (Future optional) Input fields for number of balls and max number.
 
 #### **2. CSS Styling (`style.css`)**
-    *   **Purpose:** Provide a clean, visually appealing, and responsive design for the game.
+    *   **Purpose:** Provide a clean, visually appealing, and engaging design for the number generator.
     *   **Design Principles:**
         *   Modern, clean aesthetic.
         *   Clear typography for readability.
+        *   Visually distinct display for generated numbers.
+        *   Engaging button styles.
         *   Responsive layout for different screen sizes.
-        *   Theming (e.g., soft background colors, distinct button styles).
-    *   **Specifics:**
-        *   Style game container, verse text, input field, buttons, and feedback messages.
-        *   Use CSS variables for colors and fonts to ensure consistency.
-        *   Implement basic animations for feedback (optional, but good for UX).
 
 #### **3. JavaScript Logic (`main.js`)**
-    *   **Purpose:** Handle all game mechanics, from verse selection to answer validation and UI updates.
+    *   **Purpose:** Handle the core logic of generating unique random numbers and updating the UI.
     *   **Core Functionality:**
-        *   **Verse Data:** Store a collection of Bible verses (initially hardcoded, can be expanded later). Each entry will include the verse text and its reference (e.g., "John 3:16").
-        *   **Verse Selection:** Randomly select a verse from the collection.
-        *   **Blank Generation:**
-            *   Algorithm to identify words to be blanked out (e.g., exclude common words, blank a certain percentage).
-            *   Replace selected words with interactive input elements or blank placeholders.
-        *   **User Interaction:**
-            *   Event listener for the "Check Answer" button.
-            *   Capture user input from the text field.
-        *   **Answer Checking:**
-            *   Compare user's input with the original blanked word (case-insensitive, trim whitespace).
-            *   Provide immediate visual feedback (e.g., highlight correct words in green, incorrect in red).
-        *   **Game Flow:**
-            *   Manage current verse state.
-            *   Handle "Next Verse" functionality.
-            *   Keep track of score (e.g., correct answers out of total attempts).
-        *   **UI Updates:** Dynamically update the verse display, score, and feedback messages.
-
-#### **4. Advanced Capabilities & Considerations**
-    *   **Accessibility:** Ensure keyboard navigation and proper ARIA attributes for screen readers.
-    *   **Error Handling:** Gracefully handle edge cases or unexpected user input.
-    *   **Modularity:** Organize JavaScript code into functions and potentially classes for better maintainability.
+        *   **`generateNumbers()` function:**
+            *   Generate a specified quantity (e.g., 6) of unique random numbers.
+            *   Numbers should be within a defined range (e.g., 1 to 45).
+            *   Ensure no duplicate numbers.
+            *   Sort the numbers for better presentation.
+        *   **UI Update:**
+            *   Display the generated numbers in the `number-display` area.
+            *   Handle button click event to trigger `generateNumbers()`.
 
 ## Plan & Steps for Current Change
-1.  Read `index.html`, `main.js`, `style.css` (completed).
-2.  Create `blueprint.md` (in progress).
-3.  **Update `index.html`:** Design the basic game UI.
-4.  **Update `style.css`:** Add initial styling for the game elements.
-5.  **Update `main.js`:**
-    *   Define a basic set of Bible verses.
-    *   Implement `initGame` function.
-    *   Implement `displayVerse` function to create blanks.
-    *   Implement `checkAnswer` function.
-    *   Implement event listeners.
-6.  Test the basic game functionality.
-7.  Refine styling and add responsiveness.
-8.  Add score tracking and "Next Verse" functionality.
+1.  Read `index.html`, `main.js`, `style.css` (done for previous task, but content will be completely overwritten).
+2.  Update `blueprint.md` (in progress).
+3.  **Update `index.html`:** Create the new structure for the lottery number generator.
+4.  **Update `style.css`:** Add new styling specific to the lottery number generator.
+5.  **Update `main.js`:** Implement the number generation logic and UI interaction.
+6.  Test the number generation and display.
+7.  Commit and push all changes.

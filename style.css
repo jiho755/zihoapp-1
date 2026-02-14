@@ -1,5 +1,3 @@
-/* Add styles here */
-
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   display: flex;
@@ -9,88 +7,64 @@ body {
   margin: 0;
   background-color: #f4f7f6;
   color: #333;
-  line-height: 1.6;
 }
 
-.game-container {
+.lottery-container {
   background-color: #ffffff;
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  padding: 30px;
-  max-width: 700px;
+  padding: 40px;
+  max-width: 600px;
   width: 90%;
   text-align: center;
 }
 
 h1 {
   color: #2c3e50;
-  margin-bottom: 25px;
-  font-size: 2.2em;
-}
-
-.verse-display {
-  font-size: 1.4em;
   margin-bottom: 30px;
-  min-height: 80px; /* Ensure space even when empty */
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 8px;
-  background-color: #ecf0f1;
-  padding: 20px;
-  border-radius: 8px;
-  line-height: 1.8;
+  font-size: 2.5em;
 }
 
-.verse-word {
-  display: inline-block;
-}
-
-.blank-input {
-  width: 100px; /* Adjust as needed */
-  padding: 8px 12px;
-  margin: 0 4px;
-  border: 1px solid #bdc3c7;
-  border-radius: 5px;
-  font-size: 1em;
-  text-align: center;
-  transition: border-color 0.3s ease;
-}
-
-.blank-input:focus {
-  border-color: #3498db;
-  outline: none;
-}
-
-#user-input {
-  width: calc(100% - 24px); /* Full width minus padding */
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 1.1em;
-  margin-bottom: 20px;
-}
-
-.controls {
-  margin-bottom: 20px;
+.number-display {
   display: flex;
   justify-content: center;
   gap: 15px;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+}
+
+.number-ball {
+  width: 70px;
+  height: 70px;
+  background-color: #3498db;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 2em;
+  font-weight: bold;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease-out, background-color 0.3s ease-out;
+}
+
+.number-ball:hover {
+  transform: translateY(-5px);
 }
 
 button {
-  background-color: #3498db;
+  background-color: #27ae60;
   color: white;
   border: none;
   border-radius: 8px;
-  padding: 12px 25px;
-  font-size: 1.1em;
+  padding: 15px 30px;
+  font-size: 1.2em;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 button:hover {
-  background-color: #2980b9;
+  background-color: #229954;
   transform: translateY(-2px);
 }
 
@@ -98,55 +72,24 @@ button:active {
   transform: translateY(0);
 }
 
-#feedback {
-  font-size: 1.2em;
-  margin-top: 20px;
-  min-height: 30px;
-  font-weight: bold;
-}
-
-.feedback.correct {
-  color: #27ae60;
-}
-
-.feedback.incorrect {
-  color: #e74c3c;
-}
-
-#score {
-  font-size: 1.1em;
-  margin-top: 25px;
-  color: #7f8c8d;
-}
-
 /* Responsive adjustments */
 @media (max-width: 600px) {
-  .game-container {
+  .lottery-container {
     padding: 20px;
   }
 
   h1 {
-    font-size: 1.8em;
+    font-size: 2em;
   }
 
-  .verse-display {
-    font-size: 1.2em;
-    padding: 15px;
-  }
-
-  .blank-input {
-    width: 80px;
-    margin: 0 2px;
-    padding: 6px 8px;
+  .number-ball {
+    width: 50px;
+    height: 50px;
+    font-size: 1.5em;
   }
 
   button {
-    padding: 10px 20px;
+    padding: 12px 25px;
     font-size: 1em;
-  }
-
-  #user-input {
-    font-size: 1em;
-    padding: 10px;
   }
 }
