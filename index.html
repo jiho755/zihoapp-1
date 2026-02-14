@@ -3,21 +3,27 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Lottery Number Generator</title>
+  <title>Bible Viewer</title>
   <link href='/style.css' rel='stylesheet'>
 </head>
 <body>
-  <div class="lottery-container">
-    <h1>Lottery Number Generator</h1>
-    <div id="number-display" class="number-display">
-      <div class="number-ball">?</div>
-      <div class="number-ball">?</div>
-      <div class="number-ball">?</div>
-      <div class="number-ball">?</div>
-      <div class="number-ball">?</div>
-      <div class="number-ball">?</div>
+  <div class="bible-viewer-container">
+    <h1>Bible Viewer</h1>
+
+    <div class="controls">
+      <select id="book-select"></select>
+      <select id="chapter-select"></select>
+      <select id="verse-select"></select>
     </div>
-    <button id="generate-button">Generate Numbers</button>
+
+    <div id="bible-text-display" class="bible-text-display">
+      <p>Select a book, chapter, and verse to view the Bible text.</p>
+    </div>
+
+    <div class="navigation-buttons">
+      <button id="prev-chapter">Previous Chapter</button>
+      <button id="next-chapter">Next Chapter</button>
+    </div>
   </div>
   <script defer type="text/javascript" src="/main.js"></script>
 </body>
