@@ -1,30 +1,17 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bible Viewer</title>
-  <link href='/style.css' rel='stylesheet'>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로또 번호 생성기</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="bible-viewer-container">
-    <h1>Bible Viewer</h1>
-
-    <div class="controls">
-      <select id="book-select"></select>
-      <select id="chapter-select"></select>
-      <select id="verse-select"></select>
+    <div class="container">
+        <h1>로또 번호 생성기</h1>
+        <button id="generate">번호 생성</button>
+        <div id="numbers" class="numbers-container"></div>
     </div>
-
-    <div id="bible-text-display" class="bible-text-display">
-      <p>Select a book, chapter, and verse to view the Bible text.</p>
-    </div>
-
-    <div class="navigation-buttons">
-      <button id="prev-chapter">Previous Chapter</button>
-      <button id="next-chapter">Next Chapter</button>
-    </div>
-  </div>
-  <script defer type="text/javascript" src="/main.js"></script>
+    <script src="main.js"></script>
 </body>
 </html>
