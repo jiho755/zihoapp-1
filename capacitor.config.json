@@ -1,0 +1,6 @@
+{
+  "appId": "com.jiho.saengmyeongnamu",
+  "appName": "생명나무",
+  "webDir": "www",
+  "android": { "allowMixedContent": false }
+}
