@@ -64,7 +64,7 @@ body.hm .scv{background:#fbf8f0}
 #rmore{margin:.2rem 0 1.3rem}
 .vcount{margin-right:auto;align-self:center;font-size:.85rem;color:var(--sub)}#refs li.vsel{border-left:3px solid var(--accent);padding-left:.7rem}
 body.hm .mini[aria-pressed="true"]{background:var(--btn);color:var(--on-btn);border-color:var(--btn)}
-#note{scroll-margin-bottom:7.5rem}
+#note,#wnote{scroll-margin-bottom:7.5rem}
 .hhead{display:flex;align-items:center;gap:.6rem;margin:.2rem 0 1.4rem}.hlogo{width:2.3rem;height:2.3rem;border-radius:50%;background:#dfe7da;display:flex;align-items:center;justify-content:center}.hname{font-size:1.4rem;font-weight:500;color:var(--accent);letter-spacing:-.01em}
 .hgreet{font-size:1.5rem;line-height:1.4;font-weight:400;margin:0 0 1.2rem;color:var(--ink)}
 .hcard{background:var(--surface);border-radius:1.5rem;padding:1.1rem;margin-bottom:1rem}.hcard label{display:block;font-size:.82rem;font-weight:700;color:var(--accent);margin-bottom:.55rem}
@@ -533,11 +533,14 @@ if(vv)vv.addEventListener("resize",function(){pad();if(act){clearTimeout(tm);tm=
 </script>
 <script>try{if("serviceWorker" in navigator&&location.protocol==="https:")navigator.serviceWorker.register("sw.js")}catch(e){}</script>
 <script>
-(function(){var ta=document.getElementById("note"),sv=document.getElementById("save");if(!ta||!sv)return;var sb=sv.parentNode,t=0;
-function place(){var vv=window.visualViewport,vh=Math.min(vv?vv.height:1e9,window.innerHeight),r=sb.getBoundingClientRect(),d=r.bottom-(vh-56);if(Math.abs(d)>2)window.scrollBy(0,d)}
+(function(){
+function keepInView(taId,saveId){var ta=document.getElementById(taId),sv=document.getElementById(saveId);if(!ta||!sv)return;var sb=sv.parentNode,t=0;
+function place(){var vv=window.visualViewport,vh=Math.min(vv?vv.height:1e9,window.innerHeight),d=sb.getBoundingClientRect().bottom-(vh-56),top=ta.getBoundingClientRect().top;if(top-d<70)d=top-70;if(Math.abs(d)>2)window.scrollBy(0,d)}
+function again(){if(document.activeElement===ta){clearTimeout(t);t=setTimeout(place,150)}}
 ta.addEventListener("focus",function(){clearTimeout(t);t=setTimeout(place,350);setTimeout(place,750)});
-if(window.visualViewport)window.visualViewport.addEventListener("resize",function(){if(document.activeElement===ta){clearTimeout(t);t=setTimeout(place,150)}});
-window.addEventListener("resize",function(){if(document.activeElement===ta){clearTimeout(t);t=setTimeout(place,150)}});
+if(window.visualViewport)window.visualViewport.addEventListener("resize",again);
+window.addEventListener("resize",again)}
+keepInView("note","save");keepInView("wnote","wsave")
 })();
 </script>
 </body>
