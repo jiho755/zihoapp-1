@@ -12,7 +12,7 @@
 html{scroll-padding-top:env(safe-area-inset-top,0px);font-size:var(--fs,16px)}[hidden]{display:none!important}
 *,*::before,*::after{box-sizing:inherit}
 body{margin:0;background:var(--bg);color:var(--ink);font:1rem/1.7 "Noto Sans KR",system-ui,sans-serif}
-main{max-width:34rem;margin:0 auto;padding:1.5rem 1.1rem 6rem;display:flex;flex-direction:column;min-height:100vh;min-height:100dvh}
+main{max-width:34rem;margin:0 auto;padding:1.5rem 1.1rem calc(var(--tabh,3.5rem) + .75rem);display:flex;flex-direction:column;min-height:100vh;min-height:100dvh}
 h1,h2{font-family:"Noto Serif KR",Georgia,serif;margin:0}
 h1{font-size:1.6rem;line-height:1.35;margin-bottom:.7rem}
 h2{font-size:1.15rem;margin-bottom:.4rem}
@@ -73,7 +73,7 @@ body.hm .mini[aria-pressed="true"]{background:var(--btn);color:var(--on-btn);bor
 .hchips{display:flex;flex-wrap:wrap;gap:.5rem;margin:.85rem 0}.hchips{margin:.85rem 0 .3rem;overflow:hidden}.hmore{display:block;margin:0 0 .7rem auto;border:0;background:none;color:var(--accent);font:inherit;font-size:.85rem;font-weight:700;cursor:pointer;padding:.2rem .1rem}
 .hfind{width:100%;border:0;border-radius:1rem;background:var(--btn);color:var(--on-btn);padding:.85rem;font:inherit;font-weight:700;cursor:pointer}
 #hmsg{margin:.6rem 0 0;font-size:.85rem;color:#b3261e}
-.vcard{display:flex;align-items:center;gap:1rem;background:#e1e8d9;border-radius:1.5rem;padding:1.1rem 1.2rem;margin-bottom:1.2rem}.vcard svg{flex:none}.vcard b{display:block;font-size:.82rem;color:var(--accent)}.vcard p{margin:.25rem 0 .3rem;font-size:.92rem;line-height:1.55;color:var(--ink);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;word-break:keep-all}.vcard small{font-size:.78rem;color:var(--sub)}
+.vcard{display:block;background:#e1e8d9;border-radius:1.5rem;padding:1.1rem 1.2rem;margin-bottom:1.2rem}.vh{display:flex;align-items:center;gap:.5rem}.vh svg{flex:none}.vcard b{display:block;font-size:.82rem;color:var(--accent)}.vcard p{margin:.25rem 0 .3rem;font-size:.92rem;line-height:1.55;color:var(--ink);word-break:keep-all}.vcard small{font-size:.78rem;color:var(--sub)}
 </style>
 </head>
 <body class="hm hh">
@@ -85,7 +85,7 @@ body.hm .mini[aria-pressed="true"]{background:var(--btn);color:var(--on-btn);bor
 <div class="hhead"><span class="hlogo" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 21v-9" stroke="#3f6149" stroke-width="2" stroke-linecap="round"/><path d="M12 12C12 8 9 6 5 6c0 4 3 6 7 6zM12 14c0-3 2-5 6-5 0 3-2 5-6 5z" fill="#3f6149"/></svg></span><span class="hname" id="hname">생명나무</span></div>
 <p class="hgreet" id="hgreet">오늘 마음은 어떠세요?</p>
 <div class="hcard"><label for="hin" id="hlab">고민이나 상황을 적어 주세요</label><input type="text" id="hin" placeholder="예) 이직을 앞두고 마음이 불안해요" autocomplete="off"><div class="chips hchips" id="hchips"></div><button class="hmore" id="hmore" type="button" hidden>더보기</button><button class="hfind" id="hfind" type="button">말씀 찾기</button><p id="hmsg" role="status" hidden></p></div>
-<div class="vcard"><svg viewBox="0 0 60 64" width="56" height="60" aria-hidden="true"><rect x="27" y="34" width="6" height="26" rx="2" fill="#7a5c3e"/><circle cx="30" cy="22" r="16" fill="#8aa47c"/><circle cx="16" cy="30" r="10" fill="#9bb38d"/><circle cx="44" cy="30" r="10" fill="#9bb38d"/><circle cx="24" cy="18" r="2.5" fill="#d9534f"/><circle cx="38" cy="30" r="2.5" fill="#d9534f"/></svg><div><b id="vtl">오늘의 말씀</b><p id="vtx"></p><small id="vrf"></small></div></div>
+<div class="vcard"><div class="vh"><svg viewBox="0 0 60 64" width="26" height="28" aria-hidden="true"><rect x="27" y="34" width="6" height="26" rx="2" fill="#7a5c3e"/><circle cx="30" cy="22" r="16" fill="#8aa47c"/><circle cx="16" cy="30" r="10" fill="#9bb38d"/><circle cx="44" cy="30" r="10" fill="#9bb38d"/><circle cx="24" cy="18" r="2.5" fill="#d9534f"/><circle cx="38" cy="30" r="2.5" fill="#d9534f"/></svg><b id="vtl">오늘의 말씀</b></div><p id="vtx"></p><small id="vrf"></small></div>
 </div>
 <section id="calsec" hidden>
 <h2>묵상 달력</h2>
@@ -481,7 +481,7 @@ document.getElementById("hmore").onclick=function(){hexp=!hexp;fitChips()};
 window.addEventListener("resize",fitChips);if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fitChips);
 function topicIdx(k){var f=-1;T.forEach(function(t,i){if(t.k===k)f=i});return f}
 function goTopic(k){var i=topicIdx(k);if(i<0)return false;show("write");picks=[];paintChips();pick(i);return true}
-function dayVerse(){var all=[];T.forEach(function(t){t.r.forEach(function(r){all.push(r)})});var d=new Date(),n=Math.floor((new Date(d.getFullYear(),d.getMonth(),d.getDate())-new Date(d.getFullYear(),0,0))/864e5),r=all[n%all.length],p=parse(r),c=chv(p.b,p.c)||[],s=[];for(var v=p.a;v<=p.z&&v<p.a+2;v++)if(c[v-1])s.push(c[v-1]);return{t:s.join(" "),r:dref(r)}}
+function dayVerse(){var all=[];T.forEach(function(t){t.r.forEach(function(r){all.push(r)})});var d=new Date(),n=Math.floor((new Date(d.getFullYear(),d.getMonth(),d.getDate())-new Date(d.getFullYear(),0,0))/864e5),r=all[n%all.length],p=parse(r),c=chv(p.b,p.c)||[],s=[];for(var v=p.a;v<=p.z;v++)if(c[v-1])s.push(c[v-1]);return{t:s.join(" "),r:dref(r)}}
 function paintHome(){var hc=document.getElementById("hchips");if(!hc)return;hc.innerHTML="";topicOrder().forEach(function(i){var t=T[i],b=document.createElement("button");b.type="button";b.className="chip";b.textContent=tn(t.k);b.onclick=function(){goTopic(t.k)};hc.appendChild(b)});fitChips();var v=dayVerse();document.getElementById("vtx").textContent=v.t;document.getElementById("vrf").textContent=v.r;[["hname","hname"],["hgreet","hgreet"],["hlab","hlab"],["hfind","hfind"],["vtl","hvt"]].forEach(function(a){document.getElementById(a[0]).textContent=tr(a[1])});document.getElementById("hin").placeholder=tr("hph")}
 document.getElementById("hfind").onclick=function(){var s=document.getElementById("hin").value.trim(),m=document.getElementById("hmsg");m.hidden=true;if(!s){m.textContent=tr("hempty");m.hidden=false;return}var f=null;T.forEach(function(t){if(!f&&(s.indexOf(t.k)>=0||s.toLowerCase().indexOf(tn(t.k).toLowerCase())>=0))f=t.k});if(!f){var ks=Object.keys(HK).sort(function(a,b){return b.length-a.length});for(var q=0;q<ks.length;q++)if(s.indexOf(ks[q])>=0){f=HK[ks[q]];break}}if(f&&goTopic(f)){document.getElementById("hin").value="";return}m.textContent=tr("hnone");m.hidden=false};
 var tsel=null,NEED=8;
@@ -544,5 +544,6 @@ window.addEventListener("resize",again)}
 keepInView("note","save");keepInView("wnote","wsave")
 })();
 </script>
+<script>(function(){var t=document.querySelector(".tabs");function s(){if(t)document.documentElement.style.setProperty("--tabh",t.offsetHeight+"px")}s();window.addEventListener("resize",s);if(document.fonts&&document.fonts.ready)document.fonts.ready.then(s)})();</script>
 </body>
 </html>
