@@ -232,21 +232,21 @@ function sttMsg(t){var e=document.getElementById("stt");e.textContent=t||"";e.hi
 function noteAdd(t){t=String(t||"");if(!t.trim())return;var ta=document.getElementById("wnote"),v=ta.value;ta.value=v?(/\s$/.test(v)||/^\s/.test(t)?v+t:v+" "+t):t.replace(/^\s+/,"")}
 function micState(on){var m=document.getElementById("mic");m.textContent=on?tr("micOn"):tr("mic");m.setAttribute("aria-pressed",String(on))}
 function endReasonMsg(r){return r==="not_granted"?tr("mNoGrant"):r==="rate_limited"?tr("mRate"):r==="upstream_error"?tr("mUp"):""}
-var NP=null,nOn=false,nWant=false,nLast="";
+var NP=null,nOn=false,nWant=false,nLast="",nAt=0;
 function nativeSR(){try{var C=window.Capacitor;if(C&&C.isNativePlatform&&C.isNativePlatform())return (C.Plugins&&C.Plugins.SpeechRecognition)||(C.registerPlugin&&C.registerPlugin("SpeechRecognition"))}catch(e){}return null}
 function nErr(e){nWant=false;nOn=false;micState(false);sttMsg(tr("sttStart2")+" ["+((e&&(e.message||e.code))||"error")+"]")}
 function nStart(){return NP.start({language:S.lang==="en"?"en-US":"ko-KR",partialResults:true,popup:false,maxResults:1})}
 function nativeToggle(){
-if(nWant){nWant=false;NP.stop().catch(function(){});return}
+if(nWant){nWant=false;nOn=false;micState(false);noteAdd(nLast);nLast="";sttMsg("");NP.stop().catch(function(){});return}
 NP.available().then(function(r){if(!r||!r.available){sttMsg(tr("noMic")+" [unavailable]");return}
 return NP.requestPermissions().then(function(p){if(!p||p.speechRecognition!=="granted"){sttMsg(tr("micDenied"));return}
 nLast="";
 return NP.removeAllListeners().then(function(){
 NP.addListener("partialResults",function(e){var t=e&&e.matches&&e.matches[0]||"";nLast=t;sttMsg(t?tr("listen")+" "+t:tr("listen"))});
-NP.addListener("listeningState",function(e){if(!e||e.status!=="stopped")return;noteAdd(nLast);nLast="";
+NP.addListener("listeningState",function(e){if(!e||e.status!=="stopped"||Date.now()-nAt<800)return;noteAdd(nLast);nLast="";
 if(nWant){sttMsg(tr("listen"));setTimeout(function(){if(nWant)nStart().catch(nErr)},350)}
 else{nOn=false;micState(false);sttMsg("")}});
-nWant=true;nOn=true;micState(true);sttMsg(tr("listen"));
+nWant=true;nOn=true;nAt=Date.now();micState(true);sttMsg(tr("listen"));
 return nStart()})})
 }).catch(nErr)}
 function initStt(){
