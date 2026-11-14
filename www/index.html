@@ -235,6 +235,8 @@ function endReasonMsg(r){return r==="not_granted"?tr("mNoGrant"):r==="rate_limit
 var NP=null,nOn=false,nWant=false,nLast="",nAt=0;
 function nativeSR(){try{var C=window.Capacitor;if(C&&C.isNativePlatform&&C.isNativePlatform())return (C.Plugins&&C.Plugins.SpeechRecognition)||(C.registerPlugin&&C.registerPlugin("SpeechRecognition"))}catch(e){}return null}
 function nErr(e){nWant=false;nOn=false;micState(false);sttMsg(tr("sttStart2")+" ["+((e&&(e.message||e.code))||"error")+"]")}
+var nPoll=0;
+function nWatch(){clearInterval(nPoll);nPoll=setInterval(function(){if(!nWant){clearInterval(nPoll);return}if(Date.now()-nAt<1500||!NP.isListening)return;NP.isListening().then(function(r){if(nWant&&r&&r.listening===false&&Date.now()-nAt>=1500){noteAdd(nLast);nLast="";nAt=Date.now();nStart().catch(nErr)}}).catch(function(){})},1000)}
 function nStart(){return NP.start({language:S.lang==="en"?"en-US":"ko-KR",partialResults:true,popup:false,maxResults:1})}
 function nativeToggle(){
 if(nWant){nWant=false;nOn=false;micState(false);noteAdd(nLast);nLast="";sttMsg("");NP.stop().catch(function(){});return}
@@ -246,7 +248,7 @@ NP.addListener("partialResults",function(e){var t=e&&e.matches&&e.matches[0]||""
 NP.addListener("listeningState",function(e){if(!e||e.status!=="stopped"||Date.now()-nAt<800)return;noteAdd(nLast);nLast="";
 if(nWant){sttMsg(tr("listen"));setTimeout(function(){if(nWant)nStart().catch(nErr)},350)}
 else{nOn=false;micState(false);sttMsg("")}});
-nWant=true;nOn=true;nAt=Date.now();micState(true);sttMsg(tr("listen"));
+nWant=true;nOn=true;nAt=Date.now();micState(true);sttMsg(tr("listen"));nWatch();
 return nStart()})})
 }).catch(nErr)}
 function initStt(){
