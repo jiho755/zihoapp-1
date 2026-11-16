@@ -76,9 +76,73 @@ body.hm .mini[aria-pressed="true"]{background:var(--btn);color:var(--on-btn);bor
 .hfind{width:100%;border:0;border-radius:1rem;background:var(--btn);color:var(--on-btn);padding:.85rem;font:inherit;font-weight:700;cursor:pointer}
 #hmsg{margin:.6rem 0 0;font-size:.85rem;color:#b3261e}
 .vcard{display:block;background:#e1e8d9;border-radius:1.5rem;padding:1.1rem 1.2rem;margin-bottom:1.2rem}.vh{display:flex;align-items:center;gap:.5rem}.vh svg{flex:none}.vcard b{display:block;font-size:.82rem;color:var(--accent)}.vcard p{margin:.25rem 0 .3rem;font-size:.92rem;line-height:1.55;color:var(--ink);word-break:keep-all}.vcard small{font-size:.78rem;color:var(--sub)}
+
+#splash{position:fixed;inset:0;z-index:1000;background:#f4efe4;color:#2d3b30;--ink:#2d3b30;--sub:#6a7667;--accent:#3f6149;--leaf:#6f9a6b;--leaf2:#8fb487;display:flex;align-items:center;justify-content:center;transition:opacity .6s ease;cursor:pointer}
+#splash .stage{display:flex;flex-direction:column;align-items:center;gap:1.4rem;padding:2rem 1.2rem;text-align:center}
+#splash .seedwrap{position:relative;width:min(21vw,5rem);aspect-ratio:1}
+#splash svg{width:100%;height:100%;overflow:visible;display:block}
+#splash .glow{transform-origin:100px 118px;animation:s_glow 3.6s ease-in-out infinite}
+#splash .ring{transform-origin:100px 118px;fill:none;stroke:var(--accent);stroke-width:1.4;opacity:0;animation:s_ring 3.6s ease-out infinite}
+#splash .ring.r2{animation-delay:1.2s}
+#splash .ring.r3{animation-delay:2.4s}
+#splash .float{animation:s_float 4.2s ease-in-out infinite}
+#splash .seed{transform-origin:100px 118px;animation:s_sway 4.2s ease-in-out infinite}
+#splash .leaf{transform-box:fill-box;transform-origin:50% 100%;opacity:0}
+#splash .l1{animation:s_grow1 7s ease-in-out infinite}
+#splash .l2{animation:s_grow2 7s ease-in-out infinite}
+#splash .stem{transform-box:fill-box;transform-origin:50% 100%;animation:s_stem 7s ease-in-out infinite}
+#splash .sp{fill:var(--accent);opacity:0;animation:s_rise 5.6s ease-in infinite}
+#splash .sp.s2{animation-delay:1.9s}
+#splash .sp.s3{animation-delay:3.7s}
+#splash .stitle{display:block;margin:0;font:700 clamp(2rem,9vw,2.8rem)/1.2 "Noto Serif KR","Noto Sans KR",serif;letter-spacing:.18em;padding-left:.18em;color:var(--ink);opacity:0;animation:s_fadeUp 1.4s .4s ease-out forwards}
+#splash .sub{margin:0;color:var(--sub);font-size:.95rem;opacity:0;animation:s_fadeUp 1.4s 1s ease-out forwards}
+@keyframes s_float{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+@keyframes s_sway{0%,100%{transform:rotate(-2.5deg)}50%{transform:rotate(2.5deg)}}
+@keyframes s_glow{0%,100%{transform:scale(.88);opacity:.55}50%{transform:scale(1.12);opacity:.95}}
+@keyframes s_ring{0%{transform:scale(.5);opacity:0}15%{opacity:.35}100%{transform:scale(1.45);opacity:0}}
+@keyframes s_stem{0%,12%{transform:scaleY(0)}45%,80%{transform:scaleY(1)}95%,100%{transform:scaleY(0)}}
+@keyframes s_grow1{0%,30%{opacity:0;transform:scale(0) rotate(-20deg)}50%,80%{opacity:1;transform:scale(1) rotate(0)}95%,100%{opacity:0;transform:scale(0) rotate(-20deg)}}
+@keyframes s_grow2{0%,36%{opacity:0;transform:scale(0) rotate(20deg)}56%,80%{opacity:1;transform:scale(1) rotate(0)}95%,100%{opacity:0;transform:scale(0) rotate(20deg)}}
+@keyframes s_rise{0%{opacity:0;transform:translateY(20px)}20%{opacity:.8}100%{opacity:0;transform:translateY(-70px)}}
+@keyframes s_fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){#splash *{animation-duration:.01ms!important;animation-iteration-count:1!important}#splash .leaf,#splash .stem{opacity:1;transform:none}}
 </style>
 </head>
 <body class="hm hh">
+<div id="splash" aria-hidden="true"><div class="stage"><div class="seedwrap" role="img" aria-label="움직이는 생명나무 씨앗">
+    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="sg" cx="50%" cy="50%" r="50%">
+          <stop offset="0" stop-color="#cfe0b8" stop-opacity=".95"/>
+          <stop offset="1" stop-color="#cfe0b8" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="ssd" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#8a6a45"/>
+          <stop offset="1" stop-color="#5b4128"/>
+        </linearGradient>
+      </defs>
+      <circle class="ring" cx="100" cy="118" r="52"/>
+      <circle class="ring r2" cx="100" cy="118" r="52"/>
+      <circle class="ring r3" cx="100" cy="118" r="52"/>
+      <circle class="glow" cx="100" cy="118" r="62" fill="url(#sg)"/>
+      <g class="float">
+        <g class="seed">
+          <!-- 싹 -->
+          <rect class="stem" x="98.6" y="62" width="2.8" height="30" rx="1.4" fill="var(--accent)"/>
+          <path class="leaf l1" d="M100 70 C84 66 72 54 70 42 C84 42 97 52 100 70Z" fill="var(--leaf)"/>
+          <path class="leaf l2" d="M100 64 C116 60 128 48 130 36 C116 36 103 46 100 64Z" fill="var(--leaf2)"/>
+          <!-- 씨앗 -->
+          <path d="M100 86 C128 96 140 122 128 146 C118 164 88 166 76 148 C62 126 76 94 100 86Z" fill="url(#ssd)"/>
+          <path d="M100 92 C112 112 112 138 100 160" fill="none" stroke="#f0e3c8" stroke-width="2.2" stroke-linecap="round" opacity=".55"/>
+          <ellipse cx="88" cy="112" rx="5" ry="10" fill="#fff" opacity=".22" transform="rotate(18 88 112)"/>
+        </g>
+      </g>
+      <circle class="sp" cx="62" cy="120" r="2.6"/>
+      <circle class="sp s2" cx="140" cy="130" r="2.2"/>
+      <circle class="sp s3" cx="108" cy="150" r="1.8"/>
+    </svg>
+  </div><div class="stitle">생명나무</div><p class="sub">말씀 묵상 노트</p></div></div>
+<script>(function(){var s=document.getElementById("splash");if(!s)return;var done=false;function end(){if(done)return;done=true;s.style.opacity="0";setTimeout(function(){s.remove()},650)}s.addEventListener("click",end);setTimeout(end,2600)})();</script>
 <main>
 <h1>말씀 묵상 노트</h1>
 <div id="v-home" role="tabpanel">
