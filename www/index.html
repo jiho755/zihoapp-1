@@ -515,6 +515,21 @@ if(v==="worship")return !!(g("wsm")||g("wpr")||g("wsc")||g("wnote"));
 return false}
 function discard(v){if(v==="write")document.getElementById("note").value="";if(v==="worship")resetWorship()}
 TABS.forEach(function(t){document.getElementById("t-"+t).onclick=function(){var v=curView(),g=t==="write"?"wlist":t==="worship"?"wolist":t;if(v===g)return;if(dirty(v)){confirmBox(tr("mvMsg"),function(){discard(v);show(g)},tr("mvOk"));return}show(g)}});
+(function(){var _show=show,ST=[{n:"home"}],bk=false,ign=0;
+function eq(a,b){return a.n===b.n&&a.id===b.id}function isF(e){return e.n==="write"||e.n==="worship"}
+function hs(f){try{history[f]({i:ST.length-1},"")}catch(x){}}
+hs("replaceState");
+show=function(n){_show(n);if(bk)return;var e={n:n,id:n==="detail"?detailId:undefined},t=ST[ST.length-1];if(eq(e,t))return;
+var f=isF(t),base=f?ST.slice(0,-1):ST,di=-1,i;for(i=0;i<base.length;i++)if(eq(base[i],e))di=i;
+if(di>=0){var k=ST.length-1-di;ST.length=di+1;if(k>0){ign++;history.go(-k)}return}
+if(f){ST[ST.length-1]=e;hs("replaceState")}else{ST.push(e);hs("pushState")}};
+function back(){var n=0,t;do{ST.pop();n++;t=ST[ST.length-1]}while(t.n==="detail"&&!findEntry(t.id)&&ST.length>1);
+if(n>1){ign++;history.go(-(n-1))}
+bk=true;try{if(t.n==="detail"){detailId=t.id;openDetail(t.id)}else _show(t.n)}finally{bk=false}}
+window.addEventListener("popstate",function(){if(ign>0){ign--;return}if(ST.length<2)return;
+var ov=document.querySelector(".ov");if(ov){hs("pushState");var nb=ov.querySelector(".no");if(nb)nb.click();return}
+var cur=curView();if(dirty(cur)){hs("pushState");confirmBox(tr("mvMsg"),function(){discard(cur);ign++;history.back();back()},tr("mvOk"));return}
+back()})})();
 document.getElementById("go").onclick=function(){var s=sel.split("-"),n=new Date(),d=new Date(+s[0],+s[1]-1,+s[2],n.getHours(),n.getMinutes());show("write");setWhen(d)};
 setWhen(new Date());
 var WT=["주일예배","청년예배","수요예배","금요기도회","새벽기도","기타"],wsel=document.getElementById("wtype");
