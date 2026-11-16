@@ -88,14 +88,19 @@ body.hm .mini[aria-pressed="true"]{background:var(--btn);color:var(--on-btn);bor
 #splash .float{animation:s_float 4.2s ease-in-out infinite}
 #splash .seed{transform-origin:100px 118px;animation:s_sway 4.2s ease-in-out infinite}
 #splash .leaf{transform-box:fill-box;transform-origin:50% 100%;opacity:0}
-#splash .l1{animation:s_grow1 7s ease-in-out infinite}
-#splash .l2{animation:s_grow2 7s ease-in-out infinite}
-#splash .stem{transform-box:fill-box;transform-origin:50% 100%;animation:s_stem 7s ease-in-out infinite}
+#splash .l1{animation:s_g1 2.8s ease-out both}
+#splash .l2{animation:s_g2 2.8s ease-out both}
+#splash .stem{transform-box:fill-box;transform-origin:50% 100%;animation:s_st 2.8s ease-out both}
+#splash .seedwrap{animation:s_in 2.8s ease-out both}
 #splash .sp{fill:var(--accent);opacity:0;animation:s_rise 5.6s ease-in infinite}
 #splash .sp.s2{animation-delay:1.9s}
 #splash .sp.s3{animation-delay:3.7s}
 #splash .stitle{display:block;margin:0;font:700 clamp(2rem,9vw,2.8rem)/1.2 "Noto Serif KR","Noto Sans KR",serif;letter-spacing:.18em;padding-left:.18em;color:var(--ink);opacity:0;animation:s_fadeUp 1.4s .4s ease-out forwards}
 #splash .sub{margin:0;color:var(--sub);font-size:.95rem;opacity:0;animation:s_fadeUp 1.4s 1s ease-out forwards}
+@keyframes s_in{0%{opacity:0;transform:scale(.55)}55%{opacity:1}100%{opacity:1;transform:scale(1)}}
+@keyframes s_st{0%,25%{transform:scaleY(0)}70%,100%{transform:scaleY(1)}}
+@keyframes s_g1{0%,45%{opacity:0;transform:scale(0) rotate(-20deg)}100%{opacity:1;transform:scale(1) rotate(0)}}
+@keyframes s_g2{0%,55%{opacity:0;transform:scale(0) rotate(20deg)}100%{opacity:1;transform:scale(1) rotate(0)}}
 @keyframes s_float{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
 @keyframes s_sway{0%,100%{transform:rotate(-2.5deg)}50%{transform:rotate(2.5deg)}}
 @keyframes s_glow{0%,100%{transform:scale(.88);opacity:.55}50%{transform:scale(1.12);opacity:.95}}
@@ -142,7 +147,7 @@ body.hm .mini[aria-pressed="true"]{background:var(--btn);color:var(--on-btn);bor
       <circle class="sp s3" cx="108" cy="150" r="1.8"/>
     </svg>
   </div><div class="stitle">생명나무</div><p class="sub">말씀 묵상 노트</p></div></div>
-<script>(function(){var s=document.getElementById("splash");if(!s)return;var done=false;function end(){if(done)return;done=true;s.style.opacity="0";setTimeout(function(){s.remove()},650)}s.addEventListener("click",end);setTimeout(end,2600)})();</script>
+<script>(function(){var s=document.getElementById("splash");if(!s)return;var done=false;function end(){if(done)return;done=true;s.style.opacity="0";setTimeout(function(){s.remove()},650)}s.addEventListener("click",end);setTimeout(end,3000)})();</script>
 <main>
 <h1>말씀 묵상 노트</h1>
 <div id="v-home" role="tabpanel">
