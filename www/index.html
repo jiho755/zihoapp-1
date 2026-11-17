@@ -111,6 +111,10 @@ body.hm .mini[aria-pressed="true"]{background:var(--btn);color:var(--on-btn);bor
 @keyframes s_rise{0%{opacity:0;transform:translateY(20px)}20%{opacity:.8}100%{opacity:0;transform:translateY(-70px)}}
 @keyframes s_fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){#splash *{animation-duration:.01ms!important;animation-iteration-count:1!important}#splash .leaf,#splash .stem{opacity:1;transform:none}}
+html,body{-webkit-tap-highlight-color:transparent;-webkit-touch-callout:none}
+body,body *{-webkit-user-select:none;user-select:none}
+input,textarea,select,[contenteditable],#v-detail,#v-detail *{-webkit-user-select:text;user-select:text}
+button,.chip,.tabs *{-webkit-user-select:none;user-select:none}
 </style>
 </head>
 <body class="hm hh">
