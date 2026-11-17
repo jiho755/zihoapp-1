@@ -500,7 +500,10 @@ function fitAll(){[].forEach.call(document.querySelectorAll(".ref1"),fit)}
 window.addEventListener("resize",fitAll);
 var TABS=["home","worship","write","set"],wt=0;
 function keep(){try{localStorage.setItem(SK,JSON.stringify(S))}catch(e){}}
-function apply(){var r=document.documentElement;if(S.theme==="auto")r.removeAttribute("data-theme");else r.setAttribute("data-theme",S.theme);r.style.setProperty("--fs",S.size+"px");
+var MQ=window.matchMedia?matchMedia("(prefers-color-scheme: dark)"):null;
+function syncBars(){var d=S.theme==="dark"||(S.theme==="auto"&&!!(MQ&&MQ.matches));try{if(window.AndroidTheme)AndroidTheme.setDark(d)}catch(e){}}
+if(MQ){var mqf=function(){if(S.theme==="auto")syncBars()};if(MQ.addEventListener)MQ.addEventListener("change",mqf);else if(MQ.addListener)MQ.addListener(mqf)}
+function apply(){var r=document.documentElement;if(S.theme==="auto")r.removeAttribute("data-theme");else r.setAttribute("data-theme",S.theme);syncBars();r.style.setProperty("--fs",S.size+"px");
 [].forEach.call(document.querySelectorAll("[data-theme-v]"),function(b){b.setAttribute("aria-pressed",String(b.dataset.themeV===S.theme))});
 [].forEach.call(document.querySelectorAll("[data-size-v]"),function(b){b.setAttribute("aria-pressed",String(+b.dataset.sizeV===S.size))});
 [].forEach.call(document.querySelectorAll("[data-lang-v]"),function(b){b.setAttribute("aria-pressed",String(b.dataset.langV===S.lang))});
