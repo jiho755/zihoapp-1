@@ -93,6 +93,7 @@ body.hm .mini[aria-pressed="true"]{background:var(--btn);color:var(--on-btn);bor
 :root[data-theme="dark"] body.hm{--bg:#161c18;--surface:#1f2822;--ink:#e3e9e1;--sub:#a3b0a0;--line:#34412f;--accent:#a8d1ae;--on-accent:#142019;--btn:#8fc39a;--on-btn:#0f2418;--chip:#2a3629;color-scheme:dark}:root[data-theme="dark"] body.hm .cancel,:root[data-theme="dark"] body.hm .panel,:root[data-theme="dark"] body.hm .dlg,:root[data-theme="dark"] body.hm .nav,:root[data-theme="dark"] body.hm .mini{background:var(--surface)}:root[data-theme="dark"] body.hm textarea,:root[data-theme="dark"] body.hm .fld input,:root[data-theme="dark"] body.hm .fld select,:root[data-theme="dark"] body.hm input[type=date],:root[data-theme="dark"] body.hm input[type=time],:root[data-theme="dark"] body.hm .scv,:root[data-theme="dark"] .hcard input{background:#19211c;color:var(--ink)}:root[data-theme="dark"] body.hm .mini[aria-pressed="true"]{background:var(--btn);color:var(--on-btn)}:root[data-theme="dark"] .hlogo{background:#2a3629}:root[data-theme="dark"] .vcard{background:#243127}:root[data-theme="dark"] #hmsg{color:#f2b8b5}:root[data-theme="dark"] body.hm .tabs{box-shadow:0 -4px 18px rgba(0,0,0,.35)}
 #pvov{position:fixed;inset:0;z-index:2000;display:flex;flex-direction:column;background:#f4efe4}#pvov.dk{background:#161a17}.pvbk{flex:none;align-self:flex-start;border:0;background:none;color:#3f6149;font:inherit;font-size:1rem;font-weight:600;min-height:44px;padding:.6rem 1rem;margin:max(env(safe-area-inset-top,0px),2.2rem) 0 0 .2rem;cursor:pointer}#pvov.dk .pvbk{color:#8fb487}#pvov iframe{flex:1;border:0;width:100%;background:transparent}
 #v-worship>h2,#v-set>h2{display:none}
+.spvw{text-align:center;margin:.2rem 0 1rem}.spvb{background:none;border:0;padding:.7rem 1rem;min-height:44px;font:inherit;font-size:.85rem;color:var(--sub);text-decoration:underline;cursor:pointer}
 .gpv{margin:1.3rem 0 0;font-size:.85rem}.gpv a{color:var(--sub);text-decoration:underline}
 #agate{position:fixed;inset:0;z-index:900;background:var(--bg);color:var(--ink);display:flex;align-items:center;justify-content:center;padding:1.5rem;padding-top:calc(1.5rem + env(safe-area-inset-top,0px))}
 .gbox{width:100%;max-width:22rem;text-align:center}
@@ -230,9 +231,9 @@ button,.chip,.tabs *{-webkit-user-select:none;user-select:none}
 <div class="row"><h3>언어 / Language</h3><div class="chips"><button class="chip" data-lang-v="ko">한국어</button><button class="chip" data-lang-v="en">English</button></div></div>
 <div class="row"><h3>화면 모드</h3><div class="chips"><button class="chip" data-theme-v="auto">자동</button><button class="chip" data-theme-v="light">밝게</button><button class="chip" data-theme-v="dark">어둡게</button></div></div>
 <div class="row"><h3>글자 크기</h3><div class="chips"><button class="chip" data-size-v="16">보통</button><button class="chip" data-size-v="18">크게</button><button class="chip" data-size-v="20">아주 크게</button></div></div>
-<div class="row"><button class="chip" id="spv" type="button"></button></div>
 <div class="row"><h3>기록 관리</h3><p><span id="cl1">저장된 기록 </span><strong id="cnt">0</strong><span id="cl2">개</span></p><button class="chip" id="wipe">기록 전체 삭제</button><p class="hint" id="stor"></p></div>
 <p class="hint" id="bver" style="text-align:center;margin-top:1rem">빌드 __BUILD__</p>
+<p class="spvw"><button class="spvb" id="spv" type="button"></button></p>
 </div>
 <div id="v-detail" role="tabpanel" hidden>
 <div class="dhead"><button class="del" id="dback">뒤로가기</button><h2 id="dtitle"></h2></div>
