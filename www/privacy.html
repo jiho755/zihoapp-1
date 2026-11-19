@@ -5,9 +5,13 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
 <title>개인정보 처리방침 · 생명나무</title>
+<script>(function(){var q=location.search,r=document.documentElement,m=/[?&]t=(dark|light)/.exec(q);if(/[?&]embed=1/.test(q))r.className+=" emb";if(m)r.setAttribute("data-theme",m[1])})()</script>
 <style>
 :root{--bg:#f4efe4;--card:#fbf8f0;--ink:#2d3b30;--sub:#6a7667;--accent:#3f6149;--line:#e6dfc8;--warn:#fff3c4;--warnink:#6b5200}
 @media (prefers-color-scheme:dark){:root{--bg:#161a17;--card:#1e231f;--ink:#e4e8e2;--sub:#a0aa9d;--accent:#8fb487;--line:#2e362f;--warn:#4a3d0a;--warnink:#ffe9a0}}
+.emb main{padding-top:.4rem}.emb .bkp{display:none}
+:root[data-theme="light"]{--bg:#f4efe4;--card:#fbf8f0;--ink:#2d3b30;--sub:#6a7667;--accent:#3f6149;--line:#e6dfc8;--warn:#fff3c4;--warnink:#6b5200}
+:root[data-theme="dark"]{--bg:#161a17;--card:#1e231f;--ink:#e4e8e2;--sub:#a0aa9d;--accent:#8fb487;--line:#2e362f;--warn:#4a3d0a;--warnink:#ffe9a0}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font:1rem/1.75 "Noto Sans KR",system-ui,-apple-system,sans-serif;-webkit-text-size-adjust:100%;word-break:keep-all;overflow-wrap:break-word}
 main{max-width:46rem;margin:0 auto;padding:calc(max(env(safe-area-inset-top,0px),2.6rem) + 1.6rem) 1.1rem calc(4rem + env(safe-area-inset-bottom,0px))}
@@ -29,7 +33,7 @@ nav a{margin-right:.8rem;white-space:nowrap}
 </head>
 <body>
 <main>
-<p class="meta"><a href="./" id="bk">← 앱으로 돌아가기</a></p>
+<p class="meta bkp"><a href="./" id="bk">← 앱으로 돌아가기</a></p>
 <h1>개인정보 처리방침</h1>
 <p class="meta">서비스명: 생명나무 (말씀 묵상 노트) · 시행일: 2026년 11월 18일</p>
 
@@ -129,6 +133,7 @@ nav a{margin-right:.8rem;white-space:nowrap}
 <p>이 방침의 내용이 바뀌면 시행 7일 전에 이 페이지에서 알려 드립니다. 이용자에게 불리한 변경이거나 새로 수집하는 항목이 있는 경우에는 앱 안에서도 안내합니다.</p>
 <p class="meta">공고일·시행일: 2026년 11월 18일</p>
 </main>
-<script>document.getElementById("bk").onclick=function(e){try{if(history.length>1&&document.referrer.indexOf(location.host)>-1){e.preventDefault();history.back()}}catch(x){}}</script>
+<script>if(/emb/.test(document.documentElement.className))document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest("a[href^=\"#\"]");if(a){e.preventDefault();var el=document.getElementById(a.getAttribute("href").slice(1));if(el)el.scrollIntoView()}});
+document.getElementById("bk").onclick=function(e){try{if(history.length>1&&document.referrer.indexOf(location.host)>-1){e.preventDefault();history.back()}}catch(x){}}</script>
 </body>
 </html>
