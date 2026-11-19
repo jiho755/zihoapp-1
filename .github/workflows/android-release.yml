@@ -9,7 +9,7 @@ on:
     tags: ["v*"]
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   build:
@@ -74,3 +74,13 @@ jobs:
           name: saengmyeongnamu-release-aab
           path: saengmyeongnamu-release.aab
           retention-days: 30
+
+      - name: Publish AAB as a release (Play Console 에 바로 올릴 수 있게)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release delete latest-aab --yes --cleanup-tag || true
+          gh release create latest-aab saengmyeongnamu-release.aab \
+            --title "Play 업로드용 AAB (생명나무)" \
+            --notes "커밋 ${GITHUB_SHA::7} 로 만든 서명된 AAB 입니다. 버전 코드: ${{ github.run_number }}" \
+            --prerelease
