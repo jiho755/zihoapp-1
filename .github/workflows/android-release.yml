@@ -1,0 +1,76 @@
+name: Android Release (AAB)
+
+# Google Play 에 올릴 서명된 AAB 를 만든다.
+#  - GitHub 의 Actions 탭에서 "Run workflow" 로 직접 실행하거나
+#  - v1.0.0 같은 태그를 올리면 자동으로 실행된다.
+on:
+  workflow_dispatch:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Sync web files into the Android project
+        run: npx cap sync android
+
+      - name: Restore upload keystore
+        env:
+          KS_B64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          KS_PW: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          KS_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+        run: |
+          if [ -z "$KS_B64" ] || [ -z "$KS_PW" ] || [ -z "$KS_ALIAS" ]; then
+            echo "::error::GitHub Secrets(ANDROID_KEYSTORE_BASE64 / ANDROID_KEYSTORE_PASSWORD / ANDROID_KEY_ALIAS)가 비어 있어요."
+            exit 1
+          fi
+          echo "$KS_B64" | base64 -d > "$RUNNER_TEMP/upload.jks"
+          # 지문(SHA-256)만 로그에 출력: Play Console 에 등록된 업로드 키와 맞는지 확인용
+          keytool -list -v -keystore "$RUNNER_TEMP/upload.jks" -storepass "$KS_PW" -alias "$KS_ALIAS" | grep -E "SHA256|Owner" 
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      - name: Build signed release bundle
+        working-directory: android
+        env:
+          APP_VERSION_CODE: ${{ github.run_number }}
+          ANDROID_KEYSTORE_PATH: ${{ runner.temp }}/upload.jks
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+        run: |
+          chmod +x gradlew
+          ./gradlew bundleRelease --no-daemon
+
+      - name: Verify bundle is signed
+        env:
+          KS_PW: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+        run: |
+          AAB=android/app/build/outputs/bundle/release/app-release.aab
+          jarsigner -verify "$AAB" | head -3
+          cp "$AAB" saengmyeongnamu-release.aab
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: saengmyeongnamu-release-aab
+          path: saengmyeongnamu-release.aab
+          retention-days: 30

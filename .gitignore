@@ -4,3 +4,8 @@ android/build/
 android/app/build/
 android/local.properties
 *.log
+
+# 서명 키는 절대 저장소에 올리지 않아요
+*.jks
+*.keystore
+!android/app/debug.keystore
