@@ -12,7 +12,7 @@
 html{scroll-padding-top:env(safe-area-inset-top,0px);font-size:var(--fs,16px)}[hidden]{display:none!important}
 *,*::before,*::after{box-sizing:inherit}
 body{margin:0;background:var(--bg);color:var(--ink);font:1rem/1.7 "Noto Sans KR",system-ui,sans-serif}
-main{max-width:34rem;margin:0 auto;padding:1.5rem 1.1rem calc(var(--tabh,3.5rem) + .75rem);display:flex;flex-direction:column;min-height:100vh;min-height:100dvh}
+main{max-width:34rem;margin:0 auto;padding:1.5rem 1.1rem calc(var(--tabh,3.5rem) + .75rem);display:flex;flex-direction:column;min-height:calc(100vh - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px));min-height:calc(100dvh - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px))}
 h1,h2{font-family:"Noto Serif KR",Georgia,serif;margin:0}
 h1{font-size:1.6rem;line-height:1.35;margin-bottom:.7rem}
 h2{font-size:1.15rem;margin-bottom:.4rem}
