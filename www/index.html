@@ -63,7 +63,8 @@ footer{white-space:pre-line;word-break:keep-all;color:var(--sub);font-size:calc(
 #acnote{margin:0 0 1.2rem!important}#aout{gap:.7rem}
 #ast{margin:.2rem 0 .7rem;text-align:right}#ast.fail{color:#d93025}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) #ast.fail{color:#ff8a80}}:root[data-theme="dark"] #ast.fail{color:#ff8a80}
-.ov{position:fixed;inset:0;z-index:950;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;padding:1.2rem}.dlg{background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:.8rem;padding:1.3rem 1.2rem 1.1rem;width:100%;max-width:21rem;box-shadow:0 8px 30px rgba(0,0,0,.25)}.dlg p{white-space:pre-line;word-break:keep-all;margin:0 0 1.2rem;font-weight:500;line-height:1.6}.dlg .bt{display:flex;gap:.6rem;justify-content:flex-end}.dlg button{font:inherit;font-weight:500;border-radius:.4rem;padding:.6rem 1.2rem;cursor:pointer;min-width:5rem}.dlg .no{background:var(--surface);color:var(--ink);border:1px solid var(--line)}.dlg .yes{background:#d93025;color:#fff;border:1px solid #d93025}.dlg button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.ov{position:fixed;inset:0;z-index:950;background:rgba(0,0,0,.45);display:flex;align-items:flex-start;justify-content:center;padding:1.2rem;padding-bottom:calc(1.2rem + var(--kb,0px));overflow-y:auto;overscroll-behavior:contain;box-sizing:border-box}
+.ov>.dlg{margin:auto;flex:0 1 auto}.dlg{background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:.8rem;padding:1.3rem 1.2rem 1.1rem;width:100%;max-width:21rem;box-shadow:0 8px 30px rgba(0,0,0,.25)}.dlg p{white-space:pre-line;word-break:keep-all;margin:0 0 1.2rem;font-weight:500;line-height:1.6}.dlg .bt{display:flex;gap:.6rem;justify-content:flex-end}.dlg button{font:inherit;font-weight:500;border-radius:.4rem;padding:.6rem 1.2rem;cursor:pointer;min-width:5rem}.dlg .no{background:var(--surface);color:var(--ink);border:1px solid var(--line)}.dlg .yes{background:#d93025;color:#fff;border:1px solid #d93025}.dlg button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 
 body.hm{--bg:#f4efe4;--surface:#fff;--ink:#2d3b30;--sub:#6a7667;--line:#e6dfc8;--accent:#3f6149;--on-accent:#fff;--btn:#3f6149;--on-btn:#fff;--chip:#e3e8dc;color-scheme:light}
 body.hh h1{display:none}
@@ -106,7 +107,8 @@ body.hm .mini[aria-pressed="true"]{background:var(--btn);color:var(--on-btn);bor
 .lgrow{display:flex;align-items:center;justify-content:space-between;gap:1rem;min-height:3rem;padding:.3rem 0;cursor:pointer}
 .spvw{text-align:center;margin:.2rem 0 1rem}.spvb{background:none;border:0;padding:.7rem 1rem;min-height:44px;font:inherit;font-size:.85rem;color:var(--sub);text-decoration:underline;cursor:pointer}
 .gpv{margin:1.3rem 0 0;font-size:.85rem}.gpv a{color:var(--sub);text-decoration:underline}
-#agate{position:fixed;inset:0;z-index:900;background:var(--bg);color:var(--ink);display:flex;align-items:center;justify-content:center;padding:1.5rem;padding-top:calc(1.5rem + env(safe-area-inset-top,0px))}
+#agate{position:fixed;inset:0;z-index:900;background:var(--bg);color:var(--ink);display:flex;align-items:flex-start;justify-content:center;padding:1.5rem;padding-top:calc(1.5rem + env(safe-area-inset-top,0px));padding-bottom:calc(1.5rem + var(--kb,0px));overflow-y:auto;box-sizing:border-box}
+#agate>.gbox{margin:auto}
 .gbox{width:100%;max-width:22rem;text-align:center}
 .gtitle{font:700 2.2rem/1.2 "Noto Serif KR","Noto Sans KR",serif;letter-spacing:.14em;padding-left:.14em;margin:0 0 .7rem;color:var(--ink)}
 .gsub{margin:0 0 2rem;color:var(--sub);font-size:.95rem;line-height:1.6;word-break:keep-all}
@@ -937,6 +939,17 @@ window.addEventListener("resize",again)}
 keepInView("note","save");keepInView("wnote","wsave")
 })();
 </script>
-<script>(function(){var t=document.querySelector(".tabs");function s(){if(t)document.documentElement.style.setProperty("--tabh",t.offsetHeight+"px")}s();window.addEventListener("resize",s);if(document.fonts&&document.fonts.ready)document.fonts.ready.then(s)})();</script>
+<script>(function(){var t=document.querySelector(".tabs");function s(){if(t)document.documentElement.style.setProperty("--tabh",t.offsetHeight+"px")}s();window.addEventListener("resize",s);if(document.fonts&&document.fonts.ready)document.fonts.ready.then(s)})();
+/* --- 키보드가 올라와도 팝업·입력칸이 가려지지 않게 --- */
+(function(){var vv=window.visualViewport,tm=0;
+function kb(){var h=vv?Math.max(0,Math.round(window.innerHeight-vv.height-vv.offsetTop)):0;document.documentElement.style.setProperty("--kb",h+"px")}
+function field(t){return t&&t.tagName&&/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)&&t.closest&&t.closest(".ov,#agate")}
+function reveal(){var t=document.activeElement;if(!field(t))return;try{t.scrollIntoView({block:"center",inline:"nearest",behavior:"smooth"})}catch(e){t.scrollIntoView()}}
+function later(){clearTimeout(tm);tm=setTimeout(reveal,120)}
+if(vv){vv.addEventListener("resize",function(){kb();later()});vv.addEventListener("scroll",kb)}
+window.addEventListener("resize",later);
+document.addEventListener("focusin",function(e){if(field(e.target)){kb();later();setTimeout(reveal,420)}});
+document.addEventListener("focusout",function(){setTimeout(kb,150)})})();
+</script>
 </body>
 </html>

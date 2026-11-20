@@ -3,7 +3,11 @@ package com.jiho.saengmyeongnamu;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.webkit.JavascriptInterface;
+import android.view.View;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
 import com.getcapacitor.BridgeActivity;
 
@@ -15,6 +19,13 @@ public class MainActivity extends BridgeActivity {
         setBarsDark(isSystemDark());
         // 웹 화면(설정 > 화면 모드)에서 실제 적용된 밝기를 알려 주면 아이콘 색을 맞춤
         getBridge().getWebView().addJavascriptInterface(new ThemeBridge(), "AndroidTheme");
+        // 화면 전체를 쓰는 레이아웃에서도 키보드가 올라오면 웹 화면을 그 높이만큼 줄여 팝업이 가려지지 않게 함
+        final View content = findViewById(android.R.id.content);
+        ViewCompat.setOnApplyWindowInsetsListener(content, (v, insets) -> {
+            Insets ime = insets.getInsets(WindowInsetsCompat.Type.ime());
+            v.setPadding(0, 0, 0, ime.bottom);
+            return insets;
+        });
     }
 
     private boolean isSystemDark() {
