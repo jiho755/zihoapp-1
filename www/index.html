@@ -46,6 +46,8 @@ mark.hl{background:#ffec4d;color:#1b1b1b;padding:.08em .2em;border-radius:.2em;-
 .fld select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}.save.alt{background:none;color:var(--accent);border:1px solid var(--accent)}.acts .save{margin-top:0}.wl{margin:.3rem 0;font-weight:500}.wl span{color:var(--sub);font-weight:400}
 .mini[disabled]{opacity:.6;cursor:default}.sttrow{margin:.5rem 0 .2rem}
 #wsc::placeholder{color:#7a7a7a;opacity:1}@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) #wsc::placeholder{color:#8a9a94}}:root[data-theme="dark"] #wsc::placeholder{color:#8a9a94}.scv{background:var(--bg);border-left:3px solid var(--accent);border-radius:.3rem;padding:.3rem .8rem;margin-top:.3rem;max-height:14rem;overflow:auto}.scv .vs{margin:.35rem 0}.fld .hint{margin:.2rem 0 0}
+.hint a{color:var(--sub);text-decoration:underline}
+.dlg .pvl{text-align:center;margin:.5rem 0 0}
 footer{white-space:pre-line;word-break:keep-all;color:var(--sub);font-size:calc(.88rem - 2pt);margin-top:auto;padding-top:.6rem}
 .sbar{display:flex;justify-content:flex-end;gap:.5rem;margin-top:.7rem}.sbar .save{margin-top:0}.cancel{background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:.4rem;padding:.65rem 1.3rem;font:inherit;font-weight:500;cursor:pointer}.cancel[hidden]{display:none}
 #stor{color:#d93025;white-space:pre-line}@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) #stor{color:#ff8a80}}:root[data-theme="dark"] #stor{color:#ff8a80}
@@ -777,10 +779,10 @@ function build(){var su=mode==="up",f=acEl("form"),h=acEl("h3","adt",tr(su?"aSig
 function fld(id,lab,type,ac,hint){var w=acEl("div","fld"),l=acEl("label",null,tr(lab)),i=acEl("input");l.htmlFor=id;i.id=id;i.type=type;i.setAttribute("autocomplete",ac);i.setAttribute("autocapitalize","off");i.setAttribute("autocorrect","off");i.spellcheck=false;w.appendChild(l);w.appendChild(i);if(hint)w.appendChild(acEl("p","hint",tr(hint)));f.appendChild(w);return i}
 var n=fld("ainick","aNickLbl","text","username",su?"aNickHint":""),p=fld("aipw","aPwLbl","password",su?"new-password":"current-password",su?"aPwHint":""),p2=su?fld("aipw2","aPw2Lbl","password","new-password",""):null;
 n.maxLength=10;n.value=nv;p.value=pv;
-if(su){var pl=acEl("p","hint"),pa=acEl("a",null,tr("aPriv"));pa.href="privacy.html";pa.onclick=function(e){e.preventDefault();openPrivacy()};pl.appendChild(pa);f.appendChild(pl)}
+if(su){var pl=acEl("p","hint pvl"),pa=acEl("a",null,tr("aPriv"));pa.href="privacy.html";pa.onclick=function(e){e.preventDefault();openPrivacy()};pl.appendChild(pa);f.pvl=pl}
 var er=acEl("p","aerr");er.setAttribute("role","alert");er.hidden=true;f.appendChild(er);
 var bt=acEl("div","bt"),no=acEl("button","no",tr("cCancel")),go=acEl("button","pri",tr(su?"aSignup":"aLogin")),lk=acEl("button","alink",tr(su?"aToLi":"aToSu"));
-no.type="button";go.type="submit";lk.type="button";bt.appendChild(no);bt.appendChild(go);f.appendChild(bt);f.appendChild(lk);
+no.type="button";go.type="submit";lk.type="button";bt.appendChild(no);bt.appendChild(go);f.appendChild(bt);f.appendChild(lk);if(f.pvl)f.appendChild(f.pvl);
 if(!su){var fg=acEl("button","alink",tr("aForgot"));fg.type="button";fg.onclick=function(){if(busy)return;var v=n.value.trim();close();acResetDlg(v)};f.appendChild(fg)}
 d.appendChild(f);
 function lock(b){busy=b;no.disabled=b;go.disabled=b;lk.disabled=b;n.disabled=b;p.disabled=b;if(p2)p2.disabled=b}
