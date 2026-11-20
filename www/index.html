@@ -119,6 +119,9 @@ body.hm .mini[aria-pressed="true"]{background:var(--btn);color:var(--on-btn);bor
 #setfoot[hidden]{display:none}
 #sm{padding-top:.6rem}.spvb{background:none;border:0;padding:.7rem 1rem;min-height:44px;font:inherit;font-size:.85rem;color:var(--sub);text-decoration:underline;cursor:pointer}
 .gpv{margin:1.3rem 0 0;font-size:.85rem}.gpv a{color:var(--sub);text-decoration:underline}
+.glg{margin:.4rem 0 0;font-size:.85rem;color:var(--sub);display:flex;align-items:center;justify-content:center;gap:.15rem}
+.glg button{background:none;border:0;font:inherit;color:var(--sub);padding:.3rem .6rem;min-height:2.2rem;cursor:pointer}
+.glg button[aria-pressed="true"]{color:var(--ink);font-weight:700}
 #agate{position:fixed;inset:0;z-index:900;background:var(--bg);color:var(--ink);display:flex;align-items:flex-start;justify-content:center;padding:1.5rem;padding-top:calc(1.5rem + env(safe-area-inset-top,0px));padding-bottom:calc(1.5rem + var(--kb,0px));overflow-y:auto;box-sizing:border-box}
 #agate>.gbox{margin:auto}
 .gbox{width:100%;max-width:22rem;text-align:center}
@@ -169,7 +172,7 @@ button,.chip,.tabs *{-webkit-user-select:none;user-select:none}
 </style>
 </head>
 <body class="hm hh">
-<div id="agate" role="dialog" aria-modal="true" aria-labelledby="gtitle"><div class="gbox"><div class="gtitle" id="gtitle">생명나무</div><p class="gsub" id="gsub"></p><p class="hint" id="gmsg" role="status">불러오는 중…</p><div class="gbtns" id="gbtns" hidden><button class="hfind" id="gin" type="button"></button><button class="gsec" id="gup" type="button"></button></div><p class="gpv"><a id="gpv" href="privacy.html"></a></p></div></div>
+<div id="agate" role="dialog" aria-modal="true" aria-labelledby="gtitle"><div class="gbox"><div class="gtitle" id="gtitle">생명나무</div><p class="gsub" id="gsub"></p><p class="hint" id="gmsg" role="status">불러오는 중…</p><div class="gbtns" id="gbtns" hidden><button class="hfind" id="gin" type="button"></button><button class="gsec" id="gup" type="button"></button></div><p class="gpv"><a id="gpv" href="privacy.html"></a></p><p class="glg" role="group" aria-label="Language"><button type="button" data-gl="ko">한국어</button><span aria-hidden="true">|</span><button type="button" data-gl="en">English</button></p></div></div>
 <div id="splash" aria-hidden="true"><div class="stage"><div class="seedwrap" role="img" aria-label="움직이는 생명나무 씨앗">
     <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
       <defs>
@@ -722,7 +725,7 @@ function acReq(b){return withTimeout(Promise.resolve(b),20000).then(acChk)}
 var acSyncAt=null;
 function acSetSt(s){acSt=s;if(s==="ok")acSyncAt=new Date();acUi()}
 function acSyncTxt(){if(acSt==="busy"||!acSyncAt)return tr("aStBusy");if(acSt==="fail")return tr("aStFail");var d=acSyncAt;return tr("aStOkT",{t:iso(d)+" "+p2(d.getHours())+":"+p2(d.getMinutes())+":"+p2(d.getSeconds())})}
-function acGate(){var g=document.getElementById("agate");if(!g)return;var need=!acSb||!acUser;g.hidden=!need;if(!need)return;
+function acGate(){var g=document.getElementById("agate");if(!g)return;var need=!acSb||!acUser;g.hidden=!need;[].forEach.call(g.querySelectorAll("[data-gl]"),function(b){b.setAttribute("aria-pressed",String(b.getAttribute("data-gl")===S.lang))});if(!need)return;
 var b=document.getElementById("gbtns"),m=document.getElementById("gmsg");document.getElementById("gsub").textContent=tr("gSub");
 document.getElementById("gin").textContent=tr("aLogin");document.getElementById("gup").textContent=tr("aSignup");
 if(!acSb){b.hidden=true;m.textContent=tr("gNo");m.hidden=false}else if(!acChecked){b.hidden=true;m.textContent=tr("gChk");m.hidden=false}else{b.hidden=false;m.textContent="";m.hidden=true}}
@@ -975,6 +978,9 @@ if(vv){vv.addEventListener("resize",function(){kb();later()});vv.addEventListene
 window.addEventListener("resize",later);
 document.addEventListener("focusin",function(e){if(field(e.target)){kb();later();setTimeout(reveal,420)}});
 document.addEventListener("focusout",function(){setTimeout(kb,150)})})();
+
+/* --- 시작 화면 언어 전환 (설정 > 언어의 '사용자 설정'과 같은 값) --- */
+(function(){var g=document.getElementById("agate");if(!g)return;[].forEach.call(g.querySelectorAll("[data-gl]"),function(b){b.onclick=function(){var L=b.getAttribute("data-gl");if(S.lang===L)return;S.ul=L===sysLang()?"":L;S.lang=L;keep();refreshAll()}})})();
 </script>
 </body>
 </html>
