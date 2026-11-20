@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
 <title>개인정보 처리방침 · 생명나무</title>
-<script>(function(){var q=location.search,r=document.documentElement,m=/[?&]t=(dark|light)/.exec(q);if(/[?&]embed=1/.test(q))r.className+=" emb";if(m)r.setAttribute("data-theme",m[1])})()</script>
+<script>(function(){var q=location.search,r=document.documentElement,m=/[?&]t=(dark|light)/.exec(q),l=/[?&]lang=(ko|en)/.exec(q);if(/[?&]embed=1/.test(q))r.className+=" emb";if(m)r.setAttribute("data-theme",m[1]);
+var L=l?l[1]:((navigator.language||"ko").slice(0,2)==="ko"?"ko":"en");r.setAttribute("lang",L);document.title=L==="en"?"Privacy Policy \u00b7 Saengmyeongnamu":"\uac1c\uc778\uc815\ubcf4 \ucc98\ub9ac\ubc29\uce68 \u00b7 \uc0dd\uba85\ub098\ubb34"})()</script>
 <style>
 :root{--bg:#f4efe4;--card:#fbf8f0;--ink:#2d3b30;--sub:#6a7667;--accent:#3f6149;--line:#e6dfc8;--warn:#fff3c4;--warnink:#6b5200}
 @media (prefers-color-scheme:dark){:root{--bg:#161a17;--card:#1e231f;--ink:#e4e8e2;--sub:#a0aa9d;--accent:#8fb487;--line:#2e362f;--warn:#4a3d0a;--warnink:#ffe9a0}}
@@ -29,11 +30,21 @@ th{background:var(--card)}
 a{color:var(--accent)}
 nav{font-size:.92rem;margin:.6rem 0 0}
 nav a{margin-right:.8rem;white-space:nowrap}
+html[lang="ko"] .en,html[lang="en"] .ko{display:none}
+.en{word-break:normal}
+.top{display:flex;justify-content:space-between;align-items:center;gap:.6rem;margin:0 0 .4rem}
+.top .bkp{margin:0}
+.lg{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;margin-left:auto}
+.lg button{font:inherit;font-size:.85rem;background:none;border:0;color:var(--sub);padding:.3rem .8rem;cursor:pointer;min-height:2rem}
+.lg button[aria-pressed="true"]{background:var(--accent);color:var(--bg);font-weight:600}
+.emb .top{justify-content:flex-end}
 </style>
 </head>
 <body>
 <main>
-<p class="meta bkp"><a href="./" id="bk">← 앱으로 돌아가기</a></p>
+<div class="top"><p class="meta bkp"><a href="./" id="bk"><span class="ko">← 앱으로 돌아가기</span><span class="en">← Back to app</span></a></p>
+<div class="lg" role="group" aria-label="Language"><button type="button" data-l="ko">한국어</button><button type="button" data-l="en">English</button></div></div>
+<div class="ko" lang="ko">
 <h1>개인정보 처리방침</h1>
 <p class="meta">서비스명: 생명나무 (말씀 묵상 노트) · 시행일: 2026년 11월 18일</p>
 
@@ -132,8 +143,113 @@ nav a{margin-right:.8rem;white-space:nowrap}
 <h2 id="change">11. 방침의 변경</h2>
 <p>이 방침의 내용이 바뀌면 시행 7일 전에 이 페이지에서 알려 드립니다. 이용자에게 불리한 변경이거나 새로 수집하는 항목이 있는 경우에는 앱 안에서도 안내합니다.</p>
 <p class="meta">공고일·시행일: 2026년 11월 18일</p>
+</div>
+
+<div class="en" lang="en">
+<h1>Privacy Policy</h1>
+<p class="meta">Service: Saengmyeongnamu (Tree of Life – Scripture Meditation Notes) · Effective date: November 18, 2026</p>
+
+<p>"Saengmyeongnamu" (the "Service") handles your personal information with care and complies with the Personal Information Protection Act of the Republic of Korea and related laws. This policy explains what information the Service collects and why, how it is stored and protected, and what rights you have.</p>
+
+<nav>
+<a href="#en-items">Data collected</a><a href="#en-use">Purposes</a><a href="#en-keep">Retention</a><a href="#en-out">Processors &amp; transfers</a><a href="#en-rights">Your rights</a><a href="#en-delete">Delete account</a><a href="#en-contact">Contact</a>
+</nav>
+
+<h2 id="en-items">1. Personal information we collect</h2>
+<table>
+<tr><th>Category</th><th>Items</th><th>How collected</th></tr>
+<tr><td>Sign-up (required)</td><td>Nickname, password, email address</td><td>Entered on the sign-up screen</td></tr>
+<tr><td>Identity verification</td><td>Recovery code (only an encrypted value is stored, never the original), records of email verification codes issued and checked</td><td>Generated automatically during sign-up and recovery code reissue</td></tr>
+<tr><td>Content you write</td><td>Meditation and worship records (selected Bible verses, notes and sermon notes you write, dates, etc.)</td><td>Entered by you in the app</td></tr>
+<tr><td>Automatically generated</td><td>Access logs (IP address, access time, device and browser information) that service providers' servers typically keep.</td><td>Collected automatically while you use the Service</td></tr>
+</table>
+<ul>
+<li>Passwords are stored with one-way encryption, so even the operator cannot read them.</li>
+<li>The Service does not ask for your name, phone number, location, contacts, photos, or microphone/camera permissions. The only device permission the app requests is internet access.</li>
+<li>The Service does not use advertising or analytics tools.</li>
+<li>Your login state, display settings, and a copy of your records are kept in the app storage (browser local storage) on your device.</li>
+</ul>
+
+<h2 id="en-use">2. Purposes of use</h2>
+<ul>
+<li>Member identification, login, and account management</li>
+<li>Identity verification if you lose your password or recovery code (including sending email verification codes)</li>
+<li>Saving the meditation and worship records you write and syncing them across devices</li>
+<li>Keeping the Service stable and preventing abuse (such as limiting authentication attempts)</li>
+</ul>
+
+<h2 id="en-keep">3. Retention period</h2>
+<ul>
+<li>Account information and meditation/worship records are kept until you leave the Service (delete your account). When you delete your account, the corresponding data on the server is deleted immediately.</li>
+<li>Email verification code records are kept in encrypted form for a short period and then deleted.</li>
+<li>If the law requires certain information to be retained, it is kept separately for the required period.</li>
+</ul>
+
+<h2 id="en-third">4. Provision to third parties</h2>
+<p>The Service does not sell or provide your personal information to third parties. The exception is when an investigative agency or similar authority requests it through lawful procedures based on law.</p>
+
+<h2 id="en-out">5. Processing entrusted to others and overseas transfers</h2>
+<p>To provide the Service, we entrust processing to the companies below, and some processing takes place on servers abroad. We manage these companies so that they do not use the information for purposes other than those for which it was entrusted.</p>
+<table>
+<tr><th>Recipient</th><th>Country</th><th>Items</th><th>Purpose</th></tr>
+<tr><td>Supabase Inc.<br>(database and authentication)</td><td>Republic of Korea (server location)<br>Company headquarters: United States</td><td>Nickname, password (encrypted), email, recovery code (encrypted), meditation/worship records, access logs</td><td>Member authentication, saving and syncing records</td></tr>
+<tr><td>Resend, Inc.<br>(email delivery)</td><td>United States</td><td>Email address, verification code</td><td>Sending verification code emails for identity verification</td></tr>
+<tr><td>GitHub, Inc.<br>(screen hosting)</td><td>United States and others</td><td>Access logs (IP address, etc.)</td><td>Delivering app screens and files</td></tr>
+<tr><td>Google LLC<br>(web fonts)</td><td>United States and others</td><td>Access logs (IP address, etc.)</td><td>Delivering font files</td></tr>
+</table>
+<p>When and how: data is transmitted over the network while you use the Service. Retention and use period: same as Section 3. If you do not want your data transferred abroad, it is difficult to use the Service (sign up). If you do not consent to the transfer, you may request deletion of your account.</p>
+
+<h2 id="en-rights">6. Your rights and how to exercise them</h2>
+<ul>
+<li>You may at any time request to view, correct, or delete your personal information, or to suspend its processing.</li>
+<li>You can view, edit, or delete your meditation and worship records directly in the app.</li>
+<li>For any other request, contact us at the address below. We will process it without delay after verifying your identity.</li>
+</ul>
+
+<h2 id="en-delete">7. How to delete your account</h2>
+<div class="box">
+<p><strong>Delete directly in the app</strong></p>
+<ol>
+<li>Log in to the app.</li>
+<li>Go to <strong>Settings</strong> at the bottom.</li>
+<li>Under the account item, tap <strong>Delete account</strong> and confirm as instructed.</li>
+</ol>
+<p>When you delete your account, the account information and all meditation/worship records stored on the server are erased immediately and cannot be restored.</p>
+<p><strong>If you cannot access the app</strong></p>
+<p>Send a deletion request with your nickname to the contact below. We will process it after verifying your identity.</p>
+</div>
+
+<h2 id="en-kids">8. Children under 14</h2>
+<p>The Service is not directed to children under 14, and we do not knowingly collect personal information from children under 14. If we learn that information of a child under 14 has been collected, we delete it immediately.</p>
+
+<h2 id="en-safe">9. Security measures</h2>
+<ul>
+<li>All communication is encrypted with HTTPS.</li>
+<li>Passwords and recovery codes are stored only as encrypted values, not in their original form.</li>
+<li>Database access is restricted so that each user can see only their own records.</li>
+<li>Email verification codes have a validity period (10 minutes) and an attempt limit, and cannot be reused once used.</li>
+</ul>
+
+<h2 id="en-contact">10. Privacy officer and contact</h2>
+<ul>
+<li>Officer (operator): Jihojieum (지호지음)</li>
+<li>Email: <a href="mailto:zihocoffice@gmail.com">zihocoffice@gmail.com</a></li>
+</ul>
+<p>You may also report or seek advice on privacy infringements from the following organizations (Korea).</p>
+<ul>
+<li>Personal Information Infringement Report Center (privacy.kisa.or.kr, dial 118 without an area code)</li>
+<li>Personal Information Dispute Mediation Committee (kopico.go.kr, 1833-6972)</li>
+</ul>
+
+<h2 id="en-change">11. Changes to this policy</h2>
+<p>If this policy changes, we will announce it on this page 7 days before it takes effect. If a change is unfavorable to you or adds new items we collect, we will also notify you inside the app.</p>
+<p class="meta">Announced and effective: November 18, 2026</p>
+</div>
 </main>
 <script>if(/emb/.test(document.documentElement.className))document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest("a[href^=\"#\"]");if(a){e.preventDefault();var el=document.getElementById(a.getAttribute("href").slice(1));if(el)el.scrollIntoView()}});
+(function(){var r=document.documentElement,bs=document.querySelectorAll(".lg button");function set(L){r.setAttribute("lang",L);document.title=L==="en"?"Privacy Policy \u00b7 Saengmyeongnamu":"\uac1c\uc778\uc815\ubcf4 \ucc98\ub9ac\ubc29\uce68 \u00b7 \uc0dd\uba85\ub098\ubb34";for(var i=0;i<bs.length;i++)bs[i].setAttribute("aria-pressed",bs[i].getAttribute("data-l")===L?"true":"false");window.scrollTo(0,0)}
+for(var i=0;i<bs.length;i++)bs[i].onclick=function(){set(this.getAttribute("data-l"))};
+for(var j=0;j<bs.length;j++)bs[j].setAttribute("aria-pressed",bs[j].getAttribute("data-l")===r.getAttribute("lang")?"true":"false")})();
 document.getElementById("bk").onclick=function(e){try{if(history.length>1&&document.referrer.indexOf(location.host)>-1){e.preventDefault();history.back()}}catch(x){}}</script>
 </body>
 </html>
