@@ -889,7 +889,7 @@ function acRotate(){if(!acUser||!acUser.nick){acInfo(tr("aGen"));return}var go=f
 if(acUser.mail)return go();
 acReq(acSb.rpc("my_email")).then(function(r){if(!acUser)return;if(r.data){acUser.mail=r.data;acKeepMail();acUi();go()}else acEmailWait(acUser.id)},function(e){acInfo(acErr(e))})}
 /* --- logout / delete --- */
-function acLeave(){acLeaving=true;clearTimeout(acTm);acUser=null;acReady=false;acStarting=false;acPushed={};store([]);try{localStorage.removeItem(ACN);localStorage.removeItem(ACO);localStorage.removeItem(ACM)}catch(e){}acUi();
+function acLeave(){acLeaving=true;show("home");clearTimeout(acTm);acUser=null;acReady=false;acStarting=false;acPushed={};store([]);try{localStorage.removeItem(ACN);localStorage.removeItem(ACO);localStorage.removeItem(ACM)}catch(e){}acUi();
 return withTimeout(Promise.resolve(acSb.auth.signOut()),15000).then(acNo,acNo).then(function(){sel=ymd(new Date());acLeaving=false;refreshAll();acUi()})}
 function acLogout(){confirmBox(tr("aLoConf"),function(){acSetSt("busy");acFlush().then(function(ok){if(!ok){acUi();acInfo(tr("aLoFail"));return}acLeave()})},tr("aLogout"))}
 function acDelete(){confirmBox(tr("aDelConf"),function(){acReq(acSb.rpc("delete_my_account")).then(function(){return acLeave()}).then(function(){acInfo(tr("aDeleted"))},function(e){acInfo(acErr(e))})},tr("aDel"))}
