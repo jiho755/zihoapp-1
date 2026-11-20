@@ -774,7 +774,7 @@ function close(){document.removeEventListener("keydown",key,true);ov.remove();if
 function key(e){if(e.key==="Escape"&&canClose()){e.preventDefault();close()}}
 ov.onclick=function(e){if(e.target===ov&&canClose())close()};
 document.body.appendChild(ov);document.addEventListener("keydown",key,true);return close}
-function acInfo(msg){var d=acEl("div","dlg"),p=acEl("p",null,msg),bt=acEl("div","bt"),ok=acEl("button","no",tr("aOk")),close;
+function acInfo(msg){var d=acEl("div","dlg"),p=acEl("p",null,msg),bt=acEl("div","bt"),ok=acEl("button","pri",tr("aOk")),close;
 d.setAttribute("role","alertdialog");d.setAttribute("aria-modal","true");ok.type="button";bt.appendChild(ok);d.appendChild(p);d.appendChild(bt);
 close=acOv(d,function(){return true});ok.onclick=close;ok.focus()}
 function acAuthDlg(mode){var d=acEl("div","dlg"),busy=false,nv="",pv="",close;
