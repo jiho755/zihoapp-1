@@ -513,7 +513,7 @@ document.getElementById("next").onclick=function(){vm=new Date(vm.getFullYear(),
 document.getElementById("today").onclick=function(){var n=new Date();vm=new Date(n.getFullYear(),n.getMonth(),1);sel=ymd(n);render()};
 function render(){renderTree();
 var a=load().filter(function(e){return wl?e.k!=="w":wo?e.k==="w":true}),g=document.getElementById("grid"),y=vm.getFullYear(),mo=vm.getMonth(),has={};
-g.textContent="";var td=new Date();document.getElementById("next").disabled=y*12+mo>=td.getFullYear()*12+td.getMonth();(function(){var tb=document.getElementById("today");tb.textContent=td.getDate();tb.setAttribute("aria-label",tr("goNow"));tb.disabled=y*12+mo===td.getFullYear()*12+td.getMonth()&&sel===ymd(td)})();
+g.textContent="";var td=new Date();document.getElementById("next").disabled=y*12+mo>=td.getFullYear()*12+td.getMonth();(function(){var tb=document.getElementById("today");tb.textContent="T";tb.setAttribute("aria-label",tr("goNow"));tb.disabled=y*12+mo===td.getFullYear()*12+td.getMonth()&&sel===ymd(td)})();
 document.getElementById("mon").textContent=S.lang==="en"?MOF[mo]+" "+y:S.lang==="ko"?y+"년 "+(mo+1)+"월":y+"年"+(mo+1)+"月";
 (function(){var s=sel.split("-"),g=document.getElementById("go");g.textContent=sel===ymd(new Date())?tr("goToday"):tr("goDay",{d:md(+s[1],+s[2])})})();
 a.forEach(function(e){var w=when(e);if(w){var kk=ymd(w);has[kk]=(has[kk]||0)|(e.k==="w"?2:1)}});
