@@ -15,11 +15,9 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  deploy:
+  # 1) 웹 파일을 묶어서 올리기
+  build:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
       - name: 빌드 번호 삽입
@@ -30,5 +28,30 @@ jobs:
       - uses: actions/upload-pages-artifact@v3
         with:
           path: www
-      - id: deployment
+
+  # 2) 배포 (올린 파일을 GitHub가 바로 못 찾는 경우가 있어 잠시 기다렸다가, 실패하면 최대 2번 더 시도)
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.d3.outputs.page_url || steps.d2.outputs.page_url || steps.d1.outputs.page_url }}
+    steps:
+      - name: 업로드 반영 대기
+        run: sleep 15
+      - id: d1
+        uses: actions/deploy-pages@v4
+        continue-on-error: true
+      - name: 재시도 전 대기
+        if: steps.d1.outcome == 'failure'
+        run: sleep 30
+      - id: d2
+        if: steps.d1.outcome == 'failure'
+        uses: actions/deploy-pages@v4
+        continue-on-error: true
+      - name: 재시도 전 대기
+        if: steps.d1.outcome == 'failure' && steps.d2.outcome == 'failure'
+        run: sleep 60
+      - id: d3
+        if: steps.d1.outcome == 'failure' && steps.d2.outcome == 'failure'
         uses: actions/deploy-pages@v4
