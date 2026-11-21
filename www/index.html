@@ -172,7 +172,6 @@ html,body{-webkit-tap-highlight-color:transparent;-webkit-touch-callout:none}
 body,body *{-webkit-user-select:none;user-select:none}
 input,textarea,select,[contenteditable],#v-detail,#v-detail *{-webkit-user-select:text;user-select:text}
 button,.chip,.tabs *{-webkit-user-select:none;user-select:none}
-.aitext+small+.airep,.airep{display:block;margin:.5rem 0 0;font-size:.78rem}
 </style>
 </head>
 <body class="hm hh">
@@ -346,7 +345,7 @@ for(var v=s;v<=e;v++)L.push((v>=r.a&&v<=r.z?tr("pTarget"):tr("pCtx"))+v+tr("pVer
 var t=topic||(picks.length?T[picks[0]]:null);
 var prompt=aiPrompt(r,t,L);
 box.dataset.busy="1";tx.textContent=tr("aiWait");
-aiCall("explain",prompt).then(function(res){tx.textContent=res.text;box.dataset.done="1";var rp=document.createElement("button");rp.type="button";rp.className="alink airep";rp.textContent=tr("aiReport");rp.onclick=ctDlg;box.appendChild(rp)}).catch(function(err){var c=err&&err.code;sm.hidden=true;tx.textContent=c==="quota"?tr("aiQuota"):c==="login"?tr("aiLogin"):c==="busy"?tr("aiBusy"):tr("aiFail")}).then(function(){delete box.dataset.busy})}
+aiCall("explain",prompt).then(function(res){tx.textContent=res.text;box.dataset.done="1"}).catch(function(err){var c=err&&err.code;sm.hidden=true;tx.textContent=c==="quota"?tr("aiQuota"):c==="login"?tr("aiLogin"):c==="busy"?tr("aiBusy"):tr("aiFail")}).then(function(){delete box.dataset.busy})}
 var detailId=null,dt=0;
 function findEntry(id){var a=load();for(var i=0;i<a.length;i++)if(a[i].id===id)return a[i];return null}
 function openDetail(id){detailId=id;if(renderDetail())show("detail");else show("home")}
