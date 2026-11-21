@@ -60,11 +60,13 @@ html[lang="ko"] .en,html[lang="en"] .ko{display:none}
 <tr><td>회원 가입(필수)</td><td>닉네임, 비밀번호, 이메일 주소</td><td>가입 화면 입력</td></tr>
 <tr><td>본인 확인</td><td>복구코드(원문은 저장하지 않고 암호화한 값만 저장), 이메일 인증번호 발급·확인 기록</td><td>가입·복구코드 재발급 과정에서 자동 생성</td></tr>
 <tr><td>이용자가 작성한 내용</td><td>묵상 기록과 예배 기록(선택한 성경 구절, 작성한 메모·설교 노트, 날짜 등)</td><td>이용자가 앱에 직접 입력</td></tr>
+<tr><td>AI 해설 이용 정보</td><td>월별 AI 해설 사용 횟수, 해설을 요청한 성경 구절·주제와 생성된 해설문</td><td>AI 해설 기능 사용 시 자동 생성</td></tr>
 <tr><td>자동 생성 정보</td><td>접속 기록(IP 주소, 접속 시각, 기기·브라우저 정보). 서비스 제공 업체의 서버에 일반적으로 남는 기록입니다.</td><td>서비스 이용 중 자동 수집</td></tr>
 </table>
 <ul>
 <li>비밀번호는 서비스 운영자도 알 수 없도록 일방향 암호화되어 저장됩니다.</li>
 <li>서비스는 이름, 전화번호, 위치 정보, 연락처, 사진, 마이크·카메라 접근 권한을 요구하지 않습니다. 앱이 요청하는 기기 권한은 인터넷 연결뿐입니다.</li>
+<li>AI 해설을 요청하면 선택한 성경 구절과 앞뒤 구절, 선택한 주제만 AI 서비스 업체에 전달됩니다. 작성하신 묵상·예배 메모, 닉네임, 이메일 주소는 전달되지 않습니다. 무료 이용 조건에 따라 전달된 구절·주제와 생성된 해설문이 해당 업체의 서비스 개선에 사용되거나 사람이 검토할 수 있습니다.</li>
 <li>광고 도구와 이용 분석 도구를 사용하지 않습니다.</li>
 <li>로그인 상태, 화면 설정, 기록의 사본은 이용자 기기의 앱 저장소(브라우저 로컬 저장소)에 보관됩니다.</li>
 </ul>
@@ -74,12 +76,14 @@ html[lang="ko"] .en,html[lang="en"] .ko{display:none}
 <li>회원 식별, 로그인 및 계정 관리</li>
 <li>비밀번호·복구코드를 잃어버렸을 때의 본인 확인(이메일 인증번호 발송 포함)</li>
 <li>이용자가 작성한 묵상·예배 기록의 저장과 기기 간 동기화</li>
+<li>AI 해설 제공 및 월별 이용 횟수 제한 관리</li>
 <li>서비스 안정성 확보와 부정 이용 방지(인증 시도 횟수 제한 등)</li>
 </ul>
 
 <h2 id="keep">3. 보유 및 이용 기간</h2>
 <ul>
 <li>회원 정보와 묵상·예배 기록은 회원 탈퇴(계정 삭제) 시까지 보관하며, 계정을 삭제하면 서버의 해당 정보를 즉시 삭제합니다.</li>
+<li>월별 AI 해설 사용 횟수는 계정을 삭제할 때까지 보관합니다.</li>
 <li>이메일 인증번호 발급 기록은 암호화된 형태로 단기간 보관한 뒤 삭제합니다.</li>
 <li>법령에 따라 보관해야 하는 정보가 있는 경우에는 그 기간 동안 따로 보관합니다.</li>
 </ul>
@@ -93,6 +97,7 @@ html[lang="ko"] .en,html[lang="en"] .ko{display:none}
 <tr><th>받는 자</th><th>이전 국가</th><th>항목</th><th>목적</th></tr>
 <tr><td>Supabase Inc.<br>(데이터베이스·인증)</td><td>대한민국 (서버 위치)<br>업체 본사: 미국</td><td>닉네임, 비밀번호(암호화), 이메일, 복구코드(암호화), 묵상·예배 기록, 접속 기록</td><td>회원 인증, 기록 저장·동기화</td></tr>
 <tr><td>Resend, Inc.<br>(이메일 발송)</td><td>미국</td><td>이메일 주소, 인증번호</td><td>본인 확인용 인증번호 메일 발송</td></tr>
+<tr><td>Google LLC<br>(AI 해설 생성, Gemini API)</td><td>미국</td><td>해설을 요청한 성경 구절·주제(이름·이메일 등 이용자 식별 정보는 제외)</td><td>AI 해설문 생성</td></tr>
 <tr><td>GitHub, Inc.<br>(화면 호스팅)</td><td>미국 등</td><td>접속 기록(IP 주소 등)</td><td>앱 화면·파일 제공</td></tr>
 <tr><td>Google LLC<br>(웹 글꼴)</td><td>미국 등</td><td>접속 기록(IP 주소 등)</td><td>글꼴 파일 제공</td></tr>
 </table>
@@ -161,10 +166,12 @@ html[lang="ko"] .en,html[lang="en"] .ko{display:none}
 <tr><td>Sign-up (required)</td><td>Nickname, password, email address</td><td>Entered on the sign-up screen</td></tr>
 <tr><td>Identity verification</td><td>Recovery code (only an encrypted value is stored, never the original), records of email verification codes issued and checked</td><td>Generated automatically during sign-up and recovery code reissue</td></tr>
 <tr><td>Content you write</td><td>Meditation and worship records (selected Bible verses, notes and sermon notes you write, dates, etc.)</td><td>Entered by you in the app</td></tr>
+<tr><td>AI commentary use</td><td>Monthly count of AI commentaries used, the Bible passage and theme you asked about, and the generated commentary text</td><td>Generated automatically when you use the AI commentary feature</td></tr>
 <tr><td>Automatically generated</td><td>Access logs (IP address, access time, device and browser information) that service providers' servers typically keep.</td><td>Collected automatically while you use the Service</td></tr>
 </table>
 <ul>
 <li>Passwords are stored with one-way encryption, so even the operator cannot read them.</li>
+<li>When you request AI commentary, only the selected passage, the verses around it, and the selected theme are sent to the AI service provider. Your meditation and worship notes, nickname, and email address are not sent. Under the free-use terms, the passage and theme sent and the generated commentary may be used by that provider to improve its services and may be reviewed by people.</li>
 <li>The Service does not ask for your name, phone number, location, contacts, photos, or microphone/camera permissions. The only device permission the app requests is internet access.</li>
 <li>The Service does not use advertising or analytics tools.</li>
 <li>Your login state, display settings, and a copy of your records are kept in the app storage (browser local storage) on your device.</li>
@@ -175,12 +182,14 @@ html[lang="ko"] .en,html[lang="en"] .ko{display:none}
 <li>Member identification, login, and account management</li>
 <li>Identity verification if you lose your password or recovery code (including sending email verification codes)</li>
 <li>Saving the meditation and worship records you write and syncing them across devices</li>
+<li>Providing AI commentary and managing the monthly usage limit</li>
 <li>Keeping the Service stable and preventing abuse (such as limiting authentication attempts)</li>
 </ul>
 
 <h2 id="en-keep">3. Retention period</h2>
 <ul>
 <li>Account information and meditation/worship records are kept until you leave the Service (delete your account). When you delete your account, the corresponding data on the server is deleted immediately.</li>
+<li>The monthly AI commentary usage count is kept until you delete your account.</li>
 <li>Email verification code records are kept in encrypted form for a short period and then deleted.</li>
 <li>If the law requires certain information to be retained, it is kept separately for the required period.</li>
 </ul>
@@ -194,6 +203,7 @@ html[lang="ko"] .en,html[lang="en"] .ko{display:none}
 <tr><th>Recipient</th><th>Country</th><th>Items</th><th>Purpose</th></tr>
 <tr><td>Supabase Inc.<br>(database and authentication)</td><td>Republic of Korea (server location)<br>Company headquarters: United States</td><td>Nickname, password (encrypted), email, recovery code (encrypted), meditation/worship records, access logs</td><td>Member authentication, saving and syncing records</td></tr>
 <tr><td>Resend, Inc.<br>(email delivery)</td><td>United States</td><td>Email address, verification code</td><td>Sending verification code emails for identity verification</td></tr>
+<tr><td>Google LLC<br>(AI commentary generation, Gemini API)</td><td>United States</td><td>The Bible passage and theme you asked about (no user-identifying information such as name or email)</td><td>Generating AI commentary</td></tr>
 <tr><td>GitHub, Inc.<br>(screen hosting)</td><td>United States and others</td><td>Access logs (IP address, etc.)</td><td>Delivering app screens and files</td></tr>
 <tr><td>Google LLC<br>(web fonts)</td><td>United States and others</td><td>Access logs (IP address, etc.)</td><td>Delivering font files</td></tr>
 </table>
