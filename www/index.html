@@ -208,8 +208,8 @@ body.hm .dlg .pri,body.hm .dlg .no,body.hm .dlg .yes{font-size:.8rem;padding:.35
 @keyframes vrise{from{opacity:0;transform:translateY(10px) scale(.98)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){.ov.vov,.ov.vov .vdlg{animation:none}}
 .gth{display:flex;align-items:center;gap:.25rem}
-.ginfo{display:inline-flex;align-items:center;justify-content:center;width:1.7rem;height:1.7rem;margin:-.35rem 0;padding:0;border:0;border-radius:50%;background:none;color:var(--sub);cursor:pointer}
-.ginfo svg{transform:translateY(-1.5px)}
+.ginfo{display:inline-flex;align-items:center;justify-content:center;width:1.7rem;height:1.7rem;margin:-.35rem 0;padding:0;border:0;border-radius:50%;background:none;color:var(--sub);font-size:.82rem;cursor:pointer}
+.ginfo svg{display:block;width:.93em;height:.93em;transform:translateY(-.04em)}
 .ginfo:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
 .ginfo-dlg:focus{outline:none}
 .ginfo-dlg .gil{margin:.4rem 0 .9rem;padding-left:1.1rem;font-size:.86rem;line-height:1.6;color:var(--ink)}
@@ -922,7 +922,7 @@ g.textContent="";
 var a=document.createElement("div");a.className="gart";a.innerHTML=growSvgFlat(st,{season:growSeason(),streak:q.streak,anim:true});if(anim){var pl=a.querySelector(".gplant");void pl.getBoundingClientRect();pl.classList.add("gro")}
 var b=document.createElement("div");b.className="gbody";
 function el(t,c,x){var e=document.createElement(t);e.className=c;e.textContent=x;b.appendChild(e);return e}
-var gh=document.createElement("div");gh.className="gth";var gtt=document.createElement("b");gtt.className="gt";gtt.textContent=tr("gT");var gi=document.createElement("button");gi.type="button";gi.className="ginfo";gi.setAttribute("aria-label",tr("gInfoA"));gi.innerHTML='<svg viewBox="0 0 20 20" width="14" height="14" aria-hidden="true"><circle cx="10" cy="10" r="8.2" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="10" cy="6.3" r="1.15" fill="currentColor"/><rect x="9.15" y="8.6" width="1.7" height="6" rx=".85" fill="currentColor"/></svg>';gi.onclick=function(){growInfo(st)};gh.appendChild(gtt);gh.appendChild(gi);b.appendChild(gh);el("b","gs",tr("gS"+st));
+var gh=document.createElement("div");gh.className="gth";var gtt=document.createElement("b");gtt.className="gt";gtt.textContent=tr("gT");var gi=document.createElement("button");gi.type="button";gi.className="ginfo";gi.setAttribute("aria-label",tr("gInfoA"));gi.innerHTML='<svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9.1" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="10" cy="6.3" r="1.15" fill="currentColor"/><rect x="9.15" y="8.6" width="1.7" height="6" rx=".85" fill="currentColor"/></svg>';gi.onclick=function(){growInfo(st)};gh.appendChild(gtt);gh.appendChild(gi);b.appendChild(gh);el("b","gs",tr("gS"+st));
 var bar=document.createElement("div");bar.className="gbar";bar.setAttribute("role","progressbar");bar.setAttribute("aria-valuemin","0");bar.setAttribute("aria-valuemax","100");bar.setAttribute("aria-valuenow",String(pct));var bi=document.createElement("i");bi.style.width=pct+"%";bar.appendChild(bi);b.appendChild(bar);
 el("p","gnx",full?tr("gFull"):tr("gNx",{n:nx-q.days}));var gp=el("p","gst","");gp.textContent="";sts.forEach(function(t){var sp=document.createElement("span");sp.style.whiteSpace="nowrap";sp.textContent=t;gp.appendChild(sp)});
 g.appendChild(a);g.appendChild(b);g.dataset.days=q.days;g.dataset.stage=st;
