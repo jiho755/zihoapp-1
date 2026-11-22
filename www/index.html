@@ -231,6 +231,12 @@ body.hm .dlg .pri,body.hm .dlg .no,body.hm .dlg .yes{font-size:.8rem;padding:.35
 .ycard .ycta:active{filter:brightness(.95)}
 .ycard .yem{margin:.2rem 0 .1rem;font-size:.84rem;line-height:1.6;color:var(--sub);white-space:pre-line;word-break:keep-all}
 .note.nclamp{overflow:hidden}
+.ldots{display:inline-flex;gap:.18em;margin-left:.3em;vertical-align:baseline}
+.ldots i{display:inline-block;width:.28em;height:.28em;border-radius:50%;background:currentColor;opacity:.35;animation:ldot 1.2s ease-in-out infinite}
+.ldots i:nth-child(2){animation-delay:.2s}
+.ldots i:nth-child(3){animation-delay:.4s}
+@keyframes ldot{0%,60%,100%{opacity:.35;transform:translateY(0)}30%{opacity:1;transform:translateY(-.25em)}}
+@media (prefers-reduced-motion:reduce){.ldots i{animation:none;opacity:.7}}
 </style>
 </head>
 <body class="hm hh">
@@ -389,6 +395,7 @@ function p2(n){return (n<10?"0":"")+n}
 function iso(d){return d.getFullYear()+"-"+p2(d.getMonth()+1)+"-"+p2(d.getDate())}
 function setWhen(d,ia,ib){var wd=document.getElementById(ia||"wd");wd.value=iso(d);wd.max=iso(new Date());document.getElementById(ib||"wt").value=p2(d.getHours())+":"+p2(d.getMinutes())}
 function pickedDate(ia,ib){var dv=document.getElementById(ia||"wd").value,tv=document.getElementById(ib||"wt").value,now=new Date(),m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(dv),t=/^(\d{2}):(\d{2})$/.exec(tv);if(!m)return now;var w=new Date(+m[1],+m[2]-1,+m[3],t?+t[1]:now.getHours(),t?+t[2]:now.getMinutes(),now.getSeconds(),now.getMilliseconds());return w>now?now:w}
+function waitDots(el,msg){el.textContent=String(msg).replace(/(…|\.{3})\s*$/,"");var d=document.createElement("span");d.className="ldots";d.setAttribute("aria-hidden","true");for(var i=0;i<3;i++)d.appendChild(document.createElement("i"));el.appendChild(d)}
 function aiStream(kind,prompt,onText){if(!acSb||!acUser)return Promise.reject({code:"login"});
 return acSb.auth.getSession().then(function(r){var tk=r&&r.data&&r.data.session&&r.data.session.access_token;if(!tk)throw{code:"login"};
 return fetch(ACU+"/functions/v1/ai",{method:"POST",headers:{"Authorization":"Bearer "+tk,"apikey":ACK,"Content-Type":"application/json"},body:JSON.stringify({kind:kind,lang:S.lang,prompt:prompt,stream:true})})}).then(function(res){var ct=res.headers.get("content-type")||"";
@@ -408,7 +415,7 @@ var ch=chv(r.b,r.c),s=Math.max(1,r.a-3),e=Math.min(ch.length,r.z+3),L=[];
 for(var v=s;v<=e;v++)L.push((v>=r.a&&v<=r.z?tr("pTarget"):tr("pCtx"))+v+tr("pVerse")+ch[v-1]);
 var t=topic===false?null:(topic||(picks.length?T[picks[0]]:null));
 var prompt=aiPrompt(r,t,L);
-box.dataset.busy="1";tx.textContent=tr("aiWait");tx.classList.add("aiwait");
+box.dataset.busy="1";waitDots(tx,tr("aiWait"));tx.classList.add("aiwait");
 var got=false;sm.hidden=true;aiStream("explain",prompt,function(t){if(!got){got=true;tx.classList.remove("aiwait")}tx.textContent=t}).then(function(res){tx.textContent=res.text.trim();sm.hidden=false;box.dataset.done="1"}).catch(function(err){var c=err&&err.code;sm.hidden=true;tx.textContent=c==="quota"?tr("aiQuota"):c==="login"?tr("aiLogin"):c==="busy"?tr("aiBusy"):tr("aiFail")}).then(function(){delete box.dataset.busy})}
 var detailId=null,dt=0;
 function findEntry(id){var a=load();for(var i=0;i<a.length;i++)if(a[i].id===id)return a[i];return null}
