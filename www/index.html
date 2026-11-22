@@ -471,8 +471,10 @@ else{nOn=false;micState(false);sttMsg("")}});
 nWant=true;nOn=true;nAt=Date.now();micState(true);sttMsg(tr("listen"));nWatch();
 return nStart()})})
 }).catch(nErr)}
+var STT_ON=false;   /* 음성 입력(STT) 숨김: true로 바꾸면 다시 보임 */
 function initStt(){
 var m=document.getElementById("mic");
+if(!STT_ON){m.hidden=true;var rw=m.closest(".sttrow");if(rw)rw.hidden=true;return}
 NP=nativeSR();
 function fallback(){if(SR)m.hidden=false;else sttMsg(tr("noMic"))}
 m.onclick=function(){
