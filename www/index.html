@@ -309,7 +309,7 @@ body.hm .dlg .pri,body.hm .dlg .no,body.hm .dlg .yes{font-size:.8rem;padding:.35
 <div class="when"><label for="wd2">날짜</label><input type="date" id="wd2"><label for="wt2">시간</label><input type="time" id="wt2"></div>
 <div class="fld"><label for="wsm">설교 제목</label><input type="text" id="wsm" maxlength="80"></div>
 <div class="fld"><label for="wpr">설교자</label><input type="text" id="wpr" maxlength="40"></div>
-<div class="fld"><label for="wsc">설교 본문</label><input type="text" id="wsc" maxlength="60" placeholder="ex) 창세기 1:1~5 형식으로 입력해주세요." autocomplete="off"><p class="hint" id="wscm" hidden></p><div class="scv" id="wscv" hidden></div></div>
+<div class="fld"><label for="wsc">설교 본문</label><input type="text" id="wsc" maxlength="60" placeholder="ex) 창세기 1:1~5 형식으로 입력해주세요." autocomplete="off"><p class="hint" id="wscm" hidden></p><div class="scv" id="wscv" hidden></div><div id="wscai" hidden></div></div>
 <div class="fld"><label for="wnote">설교 말씀과 느낀 점을 적어 보세요.</label><textarea id="wnote"></textarea></div>
 <div class="acts sttrow"><button class="mini" id="mic" type="button" hidden aria-pressed="false">음성 입력</button></div>
 <p class="hint" id="stt" role="status" hidden></p>
@@ -417,7 +417,7 @@ document.getElementById("dtitle").textContent=tnl(e.t)+(e.k==="w"&&e.u?" "+tr("p
 document.getElementById("dmeta").textContent=e.ts&&w?fdate(w)+" "+fmt(w):(e.d||"");
 var ul=document.getElementById("drefs"),wo=document.getElementById("dwor"),isW=e.k==="w";ul.textContent="";wo.textContent="";ul.hidden=isW;wo.hidden=!isW;
 document.getElementById("dh3").textContent=isW?tr("sNote"):tr("myMed");
-if(isW){[[tr("wsm"),e.s],[tr("wpr"),e.p],[tr("wsc"),drefs(e.r)]].forEach(function(f){if(!f[1])return;var l=document.createElement("p");l.className="wl";var s=document.createElement("span");s.textContent=f[0]+"  ";l.appendChild(s);l.appendChild(document.createTextNode(f[1]));wo.appendChild(l)});var pr=parseRef(e.r);if(pr&&!pr.err){var vb2=document.createElement("div");vb2.className="scv";verseBox(pr,vb2);wo.appendChild(vb2)}}
+if(isW){[[tr("wsm"),e.s],[tr("wpr"),e.p],[tr("wsc"),drefs(e.r)]].forEach(function(f){if(!f[1])return;var l=document.createElement("p");l.className="wl";var s=document.createElement("span");s.textContent=f[0]+"  ";l.appendChild(s);l.appendChild(document.createTextNode(f[1]));wo.appendChild(l)});var pr=parseRef(e.r);if(pr&&!pr.err){var vb2=document.createElement("div");vb2.className="scv";verseBox(pr,vb2);wo.appendChild(vb2);aiBar(pr,wo)}}
 else(e.r||"").split(", ").forEach(function(x){if(!x)return;try{ul.appendChild(refItem(x,topicOf(e,x)))}catch(err){var li=document.createElement("li");li.textContent=dref(x);ul.appendChild(li)}});
 var n=document.getElementById("dnote");n.textContent=e.n||(isW?tr("noNoteW"):tr("noNoteM"));n.className=e.n?"note":"note empty";
 var dsE=document.getElementById("dsum"),dsB=document.getElementById("dsb"),dsX=document.getElementById("dsbox");
@@ -492,10 +492,11 @@ var AL={"창":"창세기","출":"출애굽기","레":"레위기","민":"민수�
 function parseRef(s){var m=/^\s*(.+?)\s*(\d+)\s*[:：]\s*(\d+)\s*(?:[~～\-–—]\s*(\d+))?\s*$/.exec(s||"");if(!m)return null;var b=bookOf(m[1]);if(!b)return{err:"book"};var c=+m[2],a=+m[3],z=m[4]?+m[4]:a,ch=B[b][c-1];if(!ch||!ch.length||a<1||z<a||z>ch.length)return{err:"range"};return{b:b,c:c,a:a,z:z}}
 function canon(r){return r.b+" "+r.c+":"+r.a+(r.z>r.a?"~"+r.z:"")}
 function verseBox(r,box){box.textContent="";var ch=chv(r.b,r.c);for(var v=r.a;v<=r.z;v++)if(ch[v-1]!=null)box.appendChild(vline(v,ch[v-1],true,false))}
-function scv(final){var i=document.getElementById("wsc"),bx=document.getElementById("wscv"),ms=document.getElementById("wscm"),s=i.value.trim(),r=parseRef(s);bx.hidden=true;bx.textContent="";ms.hidden=true;
-if(r&&!r.err){verseBox(r,bx);bx.hidden=false;return}
+function scv(final){var i=document.getElementById("wsc"),bx=document.getElementById("wscv"),ms=document.getElementById("wscm"),s=i.value.trim(),r=parseRef(s),wa0=document.getElementById("wscai");bx.hidden=true;bx.textContent="";ms.hidden=true;if(wa0){wa0.hidden=true;wa0.textContent=""}
+if(r&&!r.err){verseBox(r,bx);bx.hidden=false;var wa=document.getElementById("wscai");if(wa){wa.textContent="";aiBar(r,wa);wa.hidden=false}return}
 if(final&&s){ms.textContent=r&&r.err==="book"?tr("scBook"):r&&r.err==="range"?tr("scRange"):tr("scFmt");ms.hidden=false}}
 function vline(v,txt,on,hl){var p=document.createElement("p");p.className="vs"+(on?"":" dim");var n=document.createElement("sup");n.className="vn";n.textContent=v;p.appendChild(n);if(hl){p.appendChild(document.createTextNode(" "));var mk=document.createElement("mark");mk.className="hl";mk.textContent=txt;p.appendChild(mk)}else p.appendChild(document.createTextNode(" "+txt));return p}
+function aiBar(r,parent){var bar=document.createElement("div"),ba=mini(tr("aiOpen")),ai=document.createElement("div");bar.className="acts";ai.className="aibox";ai.hidden=true;ba.type="button";ba.onclick=function(){explain(r,ai,ba,null)};bar.appendChild(ba);parent.appendChild(bar);parent.appendChild(ai)}
 function mini(t){var b=document.createElement("button");b.className="mini";b.textContent=t;b.setAttribute("aria-pressed","false");return b}
 function refItem(x,topic,sl){
 var r=parse(x),ch=chv(r.b,r.c),li=document.createElement("li"),h=document.createElement("div"),vb=document.createElement("div"),bar=document.createElement("div"),m=0;
