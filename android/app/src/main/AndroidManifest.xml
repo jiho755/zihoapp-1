@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <application
         android:allowBackup="true"
@@ -38,4 +39,6 @@
     <!-- Permissions -->
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 음성 입력 기능을 쓰지 않으므로 마이크 권한이 어떤 라이브러리로도 들어오지 않게 막음 -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" tools:node="remove" />
 </manifest>
