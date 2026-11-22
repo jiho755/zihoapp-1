@@ -183,7 +183,12 @@ button,.chip,.tabs *{-webkit-user-select:none;user-select:none}
 @keyframes gsnB{0%{transform:translate(0,-6px);opacity:0}8%{opacity:1}25%{transform:translate(-3px,32px)}50%{transform:translate(2px,76px)}75%{transform:translate(-3px,114px)}92%{opacity:1}100%{transform:translate(0,156px);opacity:0}}
 @keyframes gfly{0%,100%{transform:translate(0,0)}20%{transform:translate(-6px,-5px)}45%{transform:translate(3px,-9px)}70%{transform:translate(6px,2px)}85%{transform:translate(-3px,5px)}}
 @keyframes gflap{from{transform:scaleX(1)}to{transform:scaleX(.22)}}
-@media (prefers-reduced-motion:no-preference){.gsn{animation:gsnA var(--d,8s) linear var(--dl,0s) infinite}.gsn.b{animation-name:gsnB}.gbf{animation:gfly 11s ease-in-out infinite}.gbl,.gbr{animation:gflap .45s ease-in-out infinite alternate}.gstat .gsn,.gstat .gbf,.gstat .gbl,.gstat .gbr{animation:none}}
+@keyframes gflA{0%{transform:translate(0,-10px);opacity:0}8%{opacity:1}25%{transform:translate(7px,34px)}50%{transform:translate(-5px,74px)}75%{transform:translate(8px,114px)}92%{opacity:1}100%{transform:translate(0,160px);opacity:0}}
+@keyframes gflB{0%{transform:translate(0,-10px);opacity:0}8%{opacity:1}25%{transform:translate(-7px,34px)}50%{transform:translate(5px,74px)}75%{transform:translate(-8px,114px)}92%{opacity:1}100%{transform:translate(0,160px);opacity:0}}
+@keyframes gflR{0%{transform:rotate(-35deg)}50%{transform:rotate(40deg)}100%{transform:rotate(-35deg)}}
+.gfl{transform:translateY(var(--y,60px));opacity:.9}.gflr{transform-box:fill-box;transform-origin:center}
+@media (prefers-reduced-motion:no-preference){.gfl{animation:gflA var(--d,11s) linear var(--dl,0s) infinite}.gfl.b{animation-name:gflB}.gflr{animation:gflR var(--r,3s) ease-in-out infinite}.gstat .gfl,.gstat .gflr{animation:none}
+.gsn{animation:gsnA var(--d,8s) linear var(--dl,0s) infinite}.gsn.b{animation-name:gsnB}.gbf{animation:gfly 11s ease-in-out infinite}.gbl,.gbr{animation:gflap .45s ease-in-out infinite alternate}.gstat .gsn,.gstat .gbf,.gstat .gbl,.gstat .gbr{animation:none}}
 .gfs{fill-opacity:.08}@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .gfs{fill-opacity:.32}}:root[data-theme="dark"] .gfs{fill-opacity:.32}
 .gplant.gro{animation:ggrow .6s ease-out}
 @keyframes ggrow{from{opacity:0;transform:scale(.85)}to{opacity:1;transform:scale(1)}}
@@ -621,6 +626,7 @@ if(aut){[[-86,63,-15,"#d9622f"],[82,66,18,"#e8933a"],[99,57,-35,"#c4502f"]].forE
 var sn="";
 if(win){var R2=gRnd(77);for(var i=0;i<12;i++){var cx=3+R2()*126,r=.8+R2()*1.1;sn+='<circle class="gsn'+(i%2?" b":"")+'" cx="'+cx.toFixed(1)+'" cy="0" r="'+r.toFixed(2)+'" style="--y:'+(R2()*150).toFixed(0)+"px;--d:"+(6+R2()*5).toFixed(1)+"s;--dl:-"+(R2()*9).toFixed(1)+'s" fill="#fff" stroke="#9db8cc" stroke-opacity=".8" stroke-width=".5"/>'}
 sn='<g clip-path="url(#k'+u+')" pointer-events="none">'+sn+"</g>";defs+='<clipPath id="k'+u+'"><rect width="132" height="152"/></clipPath>'}
+if(aut){var R3=gRnd(51),LC=["#d9622f","#e8933a","#c4502f","#e0a83a","#b8452a","#e57a3a"];for(var i=0;i<7;i++){var lx=8+R3()*116,lc=LC[i%LC.length],sc=(.85+R3()*.45).toFixed(2);sn+='<g class="gfl'+(i%2?" b":"")+'" style="--y:'+(10+R3()*120).toFixed(0)+'px;--d:'+(9+R3()*5).toFixed(1)+"s;--dl:-"+(R3()*12).toFixed(1)+'s"><g transform="translate('+lx.toFixed(1)+' 0) scale('+sc+')"><g class="gflr" style="--r:'+(2.4+R3()*1.6).toFixed(1)+'s">'+'<path d="M-4.6 0Q-2.4 -2.8 0 -2.6Q2.6 -2.6 4.8 0Q2.6 2.6 0 2.6Q-2.4 2.8 -4.6 0z" fill="'+lc+'"/><path d="M-4.4 0L4.6 0" stroke="#7a3a1c" stroke-width=".45" stroke-opacity=".55"/></g></g></g>'}sn='<g clip-path="url(#k'+u+')" pointer-events="none">'+sn+"</g>";defs+='<clipPath id="k'+u+'"><rect width="132" height="152"/></clipPath>'}
 var nm=tr("gS"+st),sn_=tr("gSea"+se.charAt(0).toUpperCase()+se.slice(1)),TF='<g transform="translate(60 105) scale('+K+')">';
 return'<svg viewBox="0 0 132 152" role="img" aria-label="'+nm+(sn_?", "+sn_:"")+'" xmlns="http://www.w3.org/2000/svg"'+(an?"":' class="gstat"')+"><defs>"+defs+'</defs><g transform="translate(6 8)">'+db+TF+pt+"</g>"+'<g class="gplant">'+TF+pl+"</g>"+dc+"</g>"+sn+"</svg>"}function growStats(){
 var all=load(),days={},dm={},ya={},now=new Date(),y=now.getFullYear(),mo=now.getMonth(),mm=0,ww=0;
