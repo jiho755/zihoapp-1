@@ -975,7 +975,7 @@ var d=document.createElement("div");d.className="entry";
 var m=document.createElement("div");m.className="meta";m.textContent=(e.ts?fmt(w):e.d)+" · "+tnl(e.t)+(e.k==="w"&&e.u?" "+tr("partN",{n:e.u}):"")+(e.k==="w"?tr("wTag"):"");var di=document.createElement("i");di.className="dt "+(e.k==="w"?"w":"m");di.setAttribute("aria-hidden","true");m.insertBefore(di,m.firstChild);
 var r=document.createElement("div");r.className="meta ref1";r.textContent=e.k==="w"?[e.s,e.p,drefs(e.r)].filter(Boolean).join(" · "):drefs(e.r);
 d.appendChild(m);d.appendChild(r);
-if(e.n){var p=document.createElement("p");p.className="note";p.textContent=e.n;p.className="note nclamp";p.dataset.full=String(e.n);d.appendChild(p)}
+if(e.n){var p=document.createElement("p");p.className="note";p.textContent=e.n;p.className="note nclamp";p.dataset.full=String(e.n);p.dataset.lines="2";d.appendChild(p)}
 var x=document.createElement("button");x.className="del";x.textContent=tr("del");
 x.onclick=function(){confirmBox(tr("cMsg"),function(){var b=load().filter(function(z){return z.id!==e.id});store(b);render()})};
 var ac=document.createElement("div");ac.className="acts";var dv=document.createElement("button");dv.className="mini";dv.textContent=tr("detail");dv.onclick=function(){openDetail(e.id)};ac.appendChild(dv);ac.appendChild(x);d.appendChild(ac);box.appendChild(d);
@@ -983,7 +983,7 @@ var ac=document.createElement("div");ac.className="acts";var dv=document.createE
 if(!n)msg(box,tr("empty2"));
 fitAll()}
 function fit(el){var f=el.dataset.full;if(f==null)f=el.dataset.full=el.textContent;el.textContent=f;if(!el.clientWidth||el.scrollWidth<=el.clientWidth)return;var lo=0,hi=f.length;while(lo<hi){var mid=Math.ceil((lo+hi)/2);el.textContent=f.slice(0,mid).replace(/[\s,·]+$/,"")+" ...";if(el.scrollWidth<=el.clientWidth)lo=mid;else hi=mid-1}el.textContent=f.slice(0,lo).replace(/[\s,·]+$/,"")+" ..."}
-function fitAll(){[].forEach.call(document.querySelectorAll(".ref1"),fit);[].forEach.call(document.querySelectorAll(".note.nclamp"),function(el){clampN(el,3)})}
+function fitAll(){[].forEach.call(document.querySelectorAll(".ref1"),fit);[].forEach.call(document.querySelectorAll(".note.nclamp"),function(el){clampN(el,+el.dataset.lines||3)})}
 function clampN(el,n){var cs=getComputedStyle(el),lh=parseFloat(cs.lineHeight);if(!lh)lh=parseFloat(cs.fontSize)*1.5;el.style.maxHeight=(n*lh+1)+"px";yClamp(el)}
 window.addEventListener("resize",fitAll);
 var TABS=["home","worship","write","set"],wt=0;
