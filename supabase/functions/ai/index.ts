@@ -7,7 +7,7 @@ import { createClient } from "npm:@supabase/supabase-js@2";
 
 const FALLBACK_MODELS = ["gemini-flash-latest", "gemini-flash-lite-latest"];  // 마지막 대안(별칭)
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
-const LIMITS: Record<string, number> = { explain: 20, summary: 5 };
+const LIMITS: Record<string, number> = { explain: 0, summary: 5 };   // 0 = 무제한 (월 한도 없음)
 const MAX_PROMPT = 6000;      // 해설 프롬프트 최대 글자 수
 const MAX_TOKENS = 4096;      // 생각(thinking) 토큰이 포함될 수 있어 넉넉하게
 
@@ -64,9 +64,15 @@ Deno.serve(async (req) => {
   if (hit?.body) return json({ text: hit.body, cached: true });
 
   // 4) 월 한도 차감
-  const { data: q, error: qe } = await db.rpc("ai_consume", { p_user: uid, p_kind: kind, p_limit: LIMITS[kind] });
-  if (qe || !q) { console.error("ai_consume 실패", qe?.message); return json({ error: "server" }, 500); }
-  if (!q.ok) return json({ error: "quota", used: q.used, limit: q.limit }, 429);
+  const limited = (LIMITS[kind] ?? 0) > 0;
+  let q: { ok: boolean; used: number | null; limit: number | null } = { ok: true, used: null, limit: null };
+  if (limited) {
+    const { data, error: qe } = await db.rpc("ai_consume", { p_user: uid, p_kind: kind, p_limit: LIMITS[kind] });
+    if (qe || !data) { console.error("ai_consume 실패", qe?.message); return json({ error: "server" }, 500); }
+    q = data;
+    if (!q.ok) return json({ error: "quota", used: q.used, limit: q.limit }, 429);
+  }
+  const refund = async () => { if (limited) await db.rpc("ai_refund", { p_user: uid, p_kind: kind }); };
 
   // 5) Gemini 호출: 혼잡(429/500/503)이면 잠깐 쉬고 재시도, 모델이 없으면(404) 다음 모델
   try {
@@ -97,11 +103,11 @@ Deno.serve(async (req) => {
         break;   // 404(모델 없음) 등 → 다음 모델
       }
     }
-    await db.rpc("ai_refund", { p_user: uid, p_kind: kind });
+    await refund();
     return json({ error: busy ? "busy" : "upstream" }, busy ? 429 : 502);
   } catch (e) {
     console.error("호출 실패", String(e));
-    await db.rpc("ai_refund", { p_user: uid, p_kind: kind });
+    await refund();
     return json({ error: "upstream" }, 502);
   }
 });
