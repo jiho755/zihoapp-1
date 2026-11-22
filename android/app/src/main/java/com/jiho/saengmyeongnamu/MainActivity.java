@@ -4,6 +4,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.webkit.JavascriptInterface;
 import android.view.View;
+import androidx.activity.OnBackPressedCallback;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowCompat;
@@ -25,6 +26,23 @@ public class MainActivity extends BridgeActivity {
             Insets ime = insets.getInsets(WindowInsetsCompat.Type.ime());
             v.setPadding(0, 0, 0, ime.bottom);
             return insets;
+        });
+        // 뒤로 가기(화면 가장자리 스와이프 제스처·뒤로 버튼): 앱 안의 이전 화면/팝업 닫기로 처리하고,
+        // 더 돌아갈 곳이 없을 때만(홈 화면) 기본 동작으로 앱을 닫음
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                final OnBackPressedCallback self = this;
+                getBridge().getWebView().evaluateJavascript(
+                    "(function(){try{return !!(window.__appBack&&window.__appBack())}catch(e){return false}})()",
+                    result -> {
+                        if (!"true".equals(result)) {
+                            self.setEnabled(false);
+                            getOnBackPressedDispatcher().onBackPressed();
+                            self.setEnabled(true);
+                        }
+                    });
+            }
         });
     }
 

@@ -231,11 +231,6 @@ body.hm .dlg .pri,body.hm .dlg .no,body.hm .dlg .yes{font-size:.8rem;padding:.35
 .ycard .ycta:active{filter:brightness(.95)}
 .ycard .yem{margin:.2rem 0 .1rem;font-size:.84rem;line-height:1.6;color:var(--sub);white-space:pre-line;word-break:keep-all}
 .note.nclamp{overflow:hidden}
-main.swl{animation:swl .28s cubic-bezier(.2,.7,.3,1)}
-main.swr{animation:swr .28s cubic-bezier(.2,.7,.3,1)}
-@keyframes swl{from{opacity:.35;transform:translateX(28px)}to{opacity:1;transform:none}}
-@keyframes swr{from{opacity:.35;transform:translateX(-28px)}to{opacity:1;transform:none}}
-@media (prefers-reduced-motion:reduce){main.swl,main.swr{animation:none}}
 </style>
 </head>
 <body class="hm hh">
@@ -1041,25 +1036,6 @@ if(v==="worship")return !!(g("wsm")||g("wpr")||g("wsc")||g("wnote"));
 return false}
 function discard(v){if(v==="write")document.getElementById("note").value="";if(v==="worship")resetWorship()}
 TABS.forEach(function(t){document.getElementById("t-"+t).onclick=function(){var v=curView(),g=t==="write"?"wlist":t==="worship"?"wolist":t;if(v===g){if(t==="set"&&setSub){setSub="";show("set")}return}if(dirty(v)){confirmBox(tr("mvMsg"),function(){discard(v);show(g)},tr("mvOk"));return}show(g)}});
-
-/* 좌우 스와이프로 탭 이동 */
-(function(){var sx=0,sy=0,st=0,ok=false,EDGE=24,MIN=60;
-function tabOf(v){return v==="wlist"?"write":v==="wolist"?"worship":v==="detail"?null:v}
-function blocked(t){var a=document.activeElement,g=document.getElementById("agate"),sp=document.getElementById("splash");
-if(document.querySelector(".ov")||document.getElementById("pvov")||(g&&!g.hidden)||(sp&&sp.style.opacity!=="0"))return true;
-if(a&&/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName)&&a.type!=="checkbox")return true;
-if(!t||!t.closest)return false;
-return !!t.closest("#grid,.cal-h,.legend,textarea,input,select,[contenteditable]")}
-function anim(dir){var m=document.querySelector("main");if(!m||(window.matchMedia&&matchMedia("(prefers-reduced-motion:reduce)").matches))return;m.classList.remove("swl","swr");void m.offsetWidth;m.classList.add(dir>0?"swl":"swr");setTimeout(function(){m.classList.remove("swl","swr")},320)}
-function go(dir){var v=curView(),cur=tabOf(v);if(!cur)return;var i=TABS.indexOf(cur),t=TABS[i+dir];if(i<0||!t)return;
-var g=t==="write"?"wlist":t==="worship"?"wolist":t;function mv(){show(g);anim(dir)}
-if(dirty(v)){confirmBox(tr("mvMsg"),function(){discard(v);mv()},tr("mvOk"));return}mv()}
-document.addEventListener("touchstart",function(e){ok=false;if(e.touches.length!==1)return;var p=e.touches[0];if(p.clientX<EDGE||p.clientX>window.innerWidth-EDGE)return;if(blocked(e.target))return;sx=p.clientX;sy=p.clientY;st=Date.now();ok=true},{passive:true});
-document.addEventListener("touchmove",function(e){if(ok&&e.touches.length!==1)ok=false},{passive:true});
-document.addEventListener("touchend",function(e){if(!ok)return;ok=false;var p=e.changedTouches[0],dx=p.clientX-sx,dy=p.clientY-sy;
-if(Date.now()-st>800||Math.abs(dx)<MIN||Math.abs(dx)<Math.abs(dy)*1.6)return;if(window.getSelection&&String(window.getSelection()).length)return;go(dx<0?1:-1)},{passive:true});
-document.addEventListener("touchcancel",function(){ok=false},{passive:true});
-window.__swGo=go})();
 function openPrivacy(){if(document.getElementById("pvov"))return;var r=document.documentElement,th=r.getAttribute("data-theme"),dk=th==="dark"||(!th&&window.matchMedia&&matchMedia("(prefers-color-scheme:dark)").matches),o=document.createElement("div");o.id="pvov";if(dk)o.className="dk";
 var b=document.createElement("button");b.type="button";b.className="pvbk";b.textContent="\u2190 "+tr("pvBack");var f=document.createElement("iframe");f.title=tr("aPriv");f.src="privacy.html?embed=1&t="+(dk?"dark":"light")+"&lang="+(S.lang==="en"?"en":"ko");o.appendChild(b);o.appendChild(f);document.body.appendChild(o);
 var ok=false;try{history.pushState({pv:1},"");ok=true}catch(x){}b.onclick=function(){if(ok){try{history.back();return}catch(x){}}pvClose()};try{b.focus()}catch(x){}}
@@ -1079,7 +1055,13 @@ bk=true;try{if(t.n==="detail"){detailId=t.id;openDetail(t.id)}else{if(t.n==="set
 window.addEventListener("popstate",function(){if(ign>0){ign--;return}if(ST.length<2)return;
 var ov=document.querySelector(".ov");if(ov){hs("pushState");var nb=ov.querySelector(".no");if(nb)nb.click();return}
 var cur=curView();if(dirty(cur)){hs("pushState");confirmBox(tr("mvMsg"),function(){discard(cur);ign++;history.back();back()},tr("mvOk"));return}
-back()})})();
+back()});
+/* 안드로이드 뒤로 가기(가장자리 스와이프·버튼): 앱 안에서 처리했으면 true, 더 돌아갈 곳이 없으면 false */
+window.__appBack=function(){if(document.getElementById("pvov")){try{history.back()}catch(x){pvClose()}return true}
+var ov=document.querySelector(".ov");if(ov){var nb=ov.querySelector(".no");if(nb)nb.click();else document.dispatchEvent(new KeyboardEvent("keydown",{key:"Escape",bubbles:true}));return true}
+if(ST.length>=2){history.back();return true}
+var cur=curView();if(cur!=="home"){if(dirty(cur)){confirmBox(tr("mvMsg"),function(){discard(cur);show("home")},tr("mvOk"))}else show("home");return true}
+return false}})();
 document.getElementById("go").onclick=function(){var s=sel.split("-"),n=new Date(),d=new Date(+s[0],+s[1]-1,+s[2],n.getHours(),n.getMinutes());show("write");setWhen(d)};
 setWhen(new Date());
 var WT=["주일예배","청년예배","수요예배","금요기도회","새벽기도","기타"],wsel=document.getElementById("wtype");
